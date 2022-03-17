@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="MemberDAO">
+	<resultMap type="mymember" id="getMemberMapping">
+		<id property="memberCode" column="member_code" />
+		<result property="memberType" column="member_type" />
+		<result property="email" column="member_email" />
+		<result property="password" column="member_password" />
+		<result property="name" column="member_name" />
+		<result property="nickname" column="member_nickname" />
+		<result property="birthday" column="member_birthday" />
+		<result property="phone" column="member_phone" />
+		<result property="gender" column="member_gender" />
+	</resultMap>
+	
+	<insert id="insertMember">
+		INSERT INTO member(member_email, member_type, member_name, member_nickname, member_password, 
+		member_birthday, member_gender, member_phone)
+		VALUES (#{email}, #{memberType}, #{name}, #{nickname}, password(#{password}), #{birthday}, #{gender}, #{phone});
+	</insert>
+	
+	<update id="updatePassword">
+		update member set member_password = password(#{password}) where member_phone = #{phone}
+	</update>
+
+	<select id="emailCheck" resultType="int">
+		SELECT COUNT(c.member_email) AS count 
+		FROM (
+			SELECT member_email FROM member WHERE member_email = #{email}
+		) AS c
+	</select>
+	
+	<select id="getMember" resultMap="getMemberMapping">
+		SELECT * FROM member WHERE member_email = #{email}
+	</select>
+	<select id="getMemberEmail" resultMap="getMemberMapping">
+		SELECT * FROM member WHERE member_code = #{memberCode}
+	</select>
+	<select id="getAllMember" resultMap="getMemberMapping">
+		SELECT * FROM member
+	</select>
+	<select id="phoneCheck" resultType="int">
+		SELECT COUNT(c.member_email) AS count 
+		FROM (
+			SELECT member_email FROM member WHERE member_phone = #{phone}
+		) AS c
+	</select>
+	
+	<select id="getMemberPhone" resultMap="getMemberMapping">
+		SELECT * FROM member WHERE member_phone = #{phone}
+	</select>
+	<select id="passwordCheck" resultType="int">
+		SELECT COUNT(c.member_email) AS count 
+		FROM (
+			select * from member where member_email = #{email} and member_password = password(#{password})
+		) AS c
+	</select>
+	<select id="findEmail" resultType="int">
+		SELECT COUNT(c.member_email) AS count 
+		FROM (
+			SELECT member_email FROM member WHERE member_phone = #{phone} AND member_name = #{name}
+		) AS c
+	</select>
+	<select id="phoneNameGetMember" resultMap="getMemberMapping">
+		SELECT * FROM member WHERE member_phone = #{phone} AND member_name = #{name}
+	</select>
+	<select id="findPassword" resultType="int">
+		SELECT COUNT(c.member_email) AS count 
+		FROM (
+			SELECT member_email FROM member WHERE member_email = #{email} AND member_phone = #{phone}
+		) AS c
+	</select>
+	<select id="EmailPhoneGetMember" resultMap="getMemberMapping">
+		SELECT * FROM member WHERE member_email = #{email} AND member_phone = #{phone}
+	</select>
+</mapper>

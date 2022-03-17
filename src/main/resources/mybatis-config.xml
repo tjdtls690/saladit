@@ -7,10 +7,31 @@
 		<typeAlias type="project.spring.web.review.WriteReviewVO" alias="myreview" />
 		<typeAlias type="project.spring.web.tapPage.TapPageVO" alias="mytap" />
 		<typeAlias type="project.spring.web.tag.TagVO" alias="mytag" />
+		<typeAlias type="project.spring.web.detail.DetailVO" alias="mydetail" />
+		<typeAlias type="project.spring.web.basket.BasketVO" alias="mybasket" />
+		<typeAlias type="project.spring.web.mapping.MappingVO" alias="mymapping" />
+		<typeAlias type="project.spring.web.member.MemberVO" alias="mymember" />
+		<typeAlias type="project.spring.web.event.CouponVO" alias="mycoupon"/>
+		<typeAlias type="project.spring.web.search.SearchVO" alias="mysearch"/>
+		<typeAlias type="project.spring.web.md_recommand.MdRecommandVO" alias="mymd"/>
+		<typeAlias type="project.spring.web.modal.ModalVO" alias="modal"/>
+		<typeAlias type="project.spring.web.member_zipcode.MemberZipcodeVO" alias="myzipcode"/>
+		<typeAlias type="project.spring.web.paymentSingle.PaymentSingleCouponInfoVO" alias="myPaymentCoupon"/>
 	</typeAliases>
 	<mappers>
 		<mapper resource="mappings/review-mapping.xml" />
 		<mapper resource="mappings/tap-mapping.xml" />
 		<mapper resource="mappings/tag-mapping.xml" />
+		<mapper resource="mappings/detail-mapping.xml" />
+		<mapper resource="mappings/basket-mapping.xml" />
+		<mapper resource="mappings/map-mapping.xml" />
+		<mapper resource="mappings/member-mapping.xml" />
+		<mapper resource="mappings/order-mapping.xml"/>
+		<mapper resource="mappings/coupon-mapping.xml"/>
+		<mapper resource="mappings/search-mapping.xml"/>
+		<mapper resource="mappings/md-mapping.xml"/>
+		<mapper resource="mappings/modal-mapping.xml" />
+		<mapper resource="mappings/zipcode-mapping.xml" />
+		<mapper resource="mappings/payment-mapping.xml" />
 	</mappers>
 </configuration>

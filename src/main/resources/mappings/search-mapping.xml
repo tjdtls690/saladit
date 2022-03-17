@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="SearchDAO">
+	<!-- resultMap 은 join 구문을 써서 VO클래스에 매핑이 불가능 할 시 -->
+	<!-- 직접 프로퍼티 하나하나 매핑 시켜주는 역할 -->
+	<!-- 지금 같은 상황에선 안써도 되지만 연습삼아 쓴다. -->
+	<!-- seq(reviewNym), itemNum, title -->
+	<!-- 아래 COULMN은 실제 db column이어야 합니다 item 컬럼에서 형이 끌고오고싶은 컬럼을 넣어줘야합니다 sub 
+		db까지는 가지말고 item db에서만 구현 -->
+	<!-- resultmap 에서 property는 item db에서 가져오는애랑 똑같이 바뀌어야할거는 search할떄 200이 아니라 
+		검색한거를 사용해서 -->
+	<resultMap type="mysearch" id="searchresult01">
+		<id property="itemCode" column="item_code" />
+		<result property="tagMain" column="item_tag_main" />
+		<result property="tagSub" column="item_tag_sub" />
+		<result property="itemImage" column="item_image" />
+		<result property="itemName" column="item_name" />
+		<result property="itemSummary" column="item_summary" />
+		<result property="itemPriceM" column="item_price_m" />
+		<result property="itemPriceMSub" column="item_price_m_sub" />
+		<result property="starAvg" column="round(avg(b.star), 1)" />
+		<result property="reviewCount" column="count(b.content)" />
+	</resultMap>
+	<resultMap type="mysearch" id="searchresult02">
+		<id property="itemCode" column="subscribe_code" />
+		<result property="tagMain" column="subscribe_tag_main" />
+		<result property="tagSub" column="subscribe_tag_sub" />
+		<result property="itemImage" column="subscribe_image" />
+		<result property="itemName" column="subscribe_name" />
+		<result property="itemSummary" column="subscribe_summary" />
+		<result property="itemPriceM" column="subscribe_price_m" />
+		<result property="itemPriceMSub" column="subscribe_price_m_sub" />
+		<result property="starAvg" column="round(avg(b.star), 1)" />
+		<result property="reviewCount" column="count(b.content)" />
+	</resultMap>
+	<select id="getSearchItem" resultMap="searchresult01">
+		select a.item_code,a.item_tag_main, a.item_tag_sub, a.item_image, a.item_name,
+		a.item_summary,
+		a.item_price_m, a.item_price_m_sub, round(avg(b.star), 1), count(b.content)
+		from item a left join reviewboard b
+		on a.item_code = b.item_code
+		where item_name like CONCAT('%',#{search},'%')
+		group by a.item_code
+		order by a.item_code asc
+	</select>
+	
+	<select id="getSearchSubscribe" resultMap="searchresult02">
+		select a.subscribe_code, a.subscribe_tag_main, a.subscribe_tag_sub, a.subscribe_image, a.subscribe_name, a.subscribe_summary, 
+		a.subscribe_price_m, a.subscribe_price_m_sub, round(avg(b.star), 1), 
+		count(b.content) 
+		from subscribe a left join reviewboard b
+		on a.subscribe_code = b.subscribe_code 
+		where subscribe_name like CONCAT('%',#{search},'%')
+		group by a.subscribe_code
+		order by a.subscribe_code asc
+	</select>
+	<select id="getSearchItemNum" resultType="int">
+		select count(*) from item where item_name like CONCAT('%',#{search},'%')
+	</select>
+	<select id="getSearchSubscribeNum" resultType="int">
+		select count(*) from subscribe where subscribe_name like CONCAT('%',#{search},'%')
+	</select>
+</mapper>

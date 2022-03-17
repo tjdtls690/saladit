@@ -4,28 +4,14 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>샐러딧 - 샐러드 구독·건강간편식 프리미엄 배송 서비스</title>
+<script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
+<script type="text/javascript">
+$(function(){
+	$(location).attr( "href" , "main.do" );
+})
+</script>
 </head>
 <body>
-	<h1>게시판 프로그램</h1>
-	<hr />
-	<br />
-	<br></br>
-	<a href="main.do">메인 홈페이지 켜보기</a>
-	<br></br>
-	<a href="pay.do">구매 페이지 켜보기</a>
-	<br></br>
-	<a href="purchase.do">결제 페이지 켜보기</a>
-	<br></br>
-	<a href="productdetail.do">상품 상세 페이지 켜보기</a>
-	<br></br>
-	<a href="myReview.do">나의 후기 페이지 켜보기</a>
-	<br></br>
-	<a href="writeReview.do">후기 작성 페이지 켜보기</a>
-	<br></br>
-	<a href="testDetail.do">테스트 상품 상세 페이지 켜보기</a>
-	<br></br>
-	<a href="tapPage.do">탭 페이지 켜보기</a>
-	<hr />
 </body>
 </html>

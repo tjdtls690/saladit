@@ -1,0 +1,30 @@
+@charset "UTF-8";
+@media(max-width : 1023px){
+	.container[data-v-1739428d]{
+		padding-top : 75px;
+	}
+	.header__logo{
+		padding-top : 10px;
+	}
+	
+	.header__logo a[data-v-30697495]{
+		height:28px;
+	}
+}
+
+@media(min-width : 1024px){
+	.container[data-v-1739428d]{
+		padding-top: 182px;
+	}
+	.header__logo a[data-v-30697495]{
+		height:50px;
+	}
+}
+
+.header__logo a[data-v-30697495]{
+	background-image:url(../images/logo.PNG);
+}
+
+#date[data-v-7322b8a8]{
+	background-image: url(https://saladits3.s3.ap-northeast-2.amazonaws.com/pay/calendar.PNG);
+}

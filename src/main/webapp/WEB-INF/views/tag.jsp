@@ -9,6 +9,7 @@
 		class="item for-loop-cloned-item-244">
 		<input type="hidden" value="${item.itemCode }" id="itemCode">
 		<input type="hidden" value="${item.tagMain }" id="tagMain">
+		<input type="hidden" value="${item.tagSub }" id="tagSub">
 		<div data-v-15082832="" class="for-loop-cloned-item-244">
 			<figure data-v-15082832=""
 				class="item__image for-loop-cloned-item-244">

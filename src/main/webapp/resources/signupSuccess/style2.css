@@ -1,0 +1,33 @@
+@charset "UTF-8";
+
+@media ( min-width :1024px) {
+	.header__top-right>* span[data-v-30697495] {
+	    color: #333;
+	}
+	.finish-main-img[data-v-6cb71114] {
+	    background-image: url(https://saladits3.s3.ap-northeast-2.amazonaws.com/Logo/icon_signup-complete-web.png);
+	    width: 400px;
+	    height: 260px;
+	    margin: 0 0 16px;
+	}
+	.header__logo a[data-v-7aa1f9b4] {
+		background-image: url(https://saladits3.s3.ap-northeast-2.amazonaws.com/banner/logo.PNG);
+		height : 50px;
+	}
+}
+
+@media ( max-width :1023px) {
+	.header__logo a[data-v-7aa1f9b4] {
+		background-image: url(https://saladits3.s3.ap-northeast-2.amazonaws.com/banner/logo.PNG);
+		height : 31px;
+	}
+}
+
+.finish-main-img[data-v-6cb71114] {
+    background-image: url(https://saladits3.s3.ap-northeast-2.amazonaws.com/Logo/icon_signup-complete-mobile.png);
+    background-size: cover;
+    background-position: 50%;
+    width: 345px;
+    height: 224px;
+    margin: 0 0 16px;
+}

@@ -6,7 +6,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>프레시코드 - 프리미엄 샐러드 배달 서비스</title>
+<title>샐러딧 - 프리미엄 샐러드 배달 서비스</title>
 <meta data-n-head="ssr" charset="utf-8">
 <meta data-n-head="ssr" name="viewport"
 	content="width=device-width, initial-scale=1, maximum-scale=1.0, minimal-ui, viewport-fit=cover, user-scalable=no">
@@ -21,21 +21,21 @@
 <meta data-n-head="ssr" data-hid="og:type" property="og:type"
 	content="website">
 <link data-n-head="ssr" rel="icon" type="image/x-icon"
-	href="/fc-favicon-16.png" sizes="16x16">
+	href="https://saladits3.s3.ap-northeast-2.amazonaws.com/Logo/icon_leaf.png" sizes="16x16">
 <link data-n-head="ssr" rel="icon" type="image/x-icon"
-	href="/fc-favicon-24.png" sizes="24x24">
+	href="https://saladits3.s3.ap-northeast-2.amazonaws.com/Logo/icon_leaf.png" sizes="24x24">
 <link data-n-head="ssr" rel="icon" type="image/x-icon"
-	href="/fc-favicon-32.png" sizes="32x32">
+	href="https://saladits3.s3.ap-northeast-2.amazonaws.com/Logo/icon_leaf.png" sizes="32x32">
 <link data-n-head="ssr" rel="icon" type="image/x-icon"
-	href="/fc-favicon-57.png" sizes="57x57">
+	href="https://saladits3.s3.ap-northeast-2.amazonaws.com/Logo/icon_leaf.png" sizes="57x57">
 <link data-n-head="ssr" rel="icon" type="image/x-icon"
-	href="/fc-favicon-120.png" sizes="120x120">
+	href="https://saladits3.s3.ap-northeast-2.amazonaws.com/Logo/icon_leaf.png" sizes="120x120">
 <link data-n-head="ssr" rel="icon" type="image/x-icon"
-	href="/fc-favicon-152.png" sizes="152x152">
+	href="https://saladits3.s3.ap-northeast-2.amazonaws.com/Logo/icon_leaf.png" sizes="152x152">
 <link data-n-head="ssr" rel="icon" type="image/x-icon"
-	href="/fc-favicon-196.png" sizes="196x196">
+	href="https://saladits3.s3.ap-northeast-2.amazonaws.com/Logo/icon_leaf.png" sizes="196x196">
 	<link href="${path}/style1.css" rel="stylesheet" type="text/css" />
-	<link href="${path}/style2.css?ver=1" rel="stylesheet" type="text/css" />
+	<link href="${path}/style2.css?ver=2" rel="stylesheet" type="text/css" />
 	<script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
 <script type="text/javascript">
 function page_move(tagNum){
@@ -49,16 +49,92 @@ function page_move(tagNum){
 $(document).on('click', 'article.item', function(){ // 상세페이지와 연계되는 기능
 	var f = document.paging;
 	var code = $(this).children('#itemCode').attr('value');
-	var tag = $(this).children('#tagMain').attr('value')
+	var tag = $(this).children('#tagMain').attr('value');
+	var tagSub = $(this).children('#tagSub').attr('value');
 	f.tagMain01.value = tag;
 	f.itemCode01.value = code;
-	f.action="test01.do"; // 상세페이지 url 로 연결만 시키기
+	f.tagSub01.value = tagSub;
+	f.action="detail.do"; // 상세페이지 url 로 연결만 시키기
 	f.method="post";
 	f.submit();
 })
 
 
 $(function() { 
+	var tagMainStart = ${tagMain};
+	$('#menu' + tagMainStart).attr('class','nuxt-link-exact-active nuxt-link-active all-menus-item-link');
+	
+	
+	
+	$(document).on('click', '.all-menus-arrow-wrap.spread', function(){
+		$('.all-menus-spread-container.height-plus').detach();
+	})
+	
+	$('.all-menus-arrow-wrap').on('click', function(){
+		$.ajax({
+			url : 'dropDownAllMenu.do',
+			dataType : 'html',
+			success : function(htmlOut){
+				$('header').append(htmlOut);
+				$('#menuSe' + tagMainStart).attr('class','nuxt-link-exact-active nuxt-link-active all-menus-item-link');
+				$('#menuSe' + tagMainStart).sibling().attr('class','all-menus-item-link');
+			}
+		})
+	})
+	
+	$('.all-menus-item-link').on('click', function(){
+		$(this).attr('class', 'nuxt-link-exact-active nuxt-link-active all-menus-item-link');
+		$(this).sibling().attr('class', 'all-menus-item-link');
+	})
+	
+	$(document).on('click', '#closeFinalCheck', function(){
+		$('.swal2-container').attr('class', 'swal2-container swal2-center swal2-backdrop-hide');
+		$('.swal2-popup').attr('swal2-popup swal2-modal swal2-icon-info swal2-hide');
+		setTimeout(function() {
+			$('.swal2-container').detach();
+		}, 100);
+	})
+	
+	$(document).on('click', '.swal2-container.swal2-center.swal2-backdrop-show', function(e){
+		if (!$(e.target).hasClass("swal2-popup") && !$(e.target).hasClass("swal2-header") && !$(e.target).hasClass("swal2-content") && !$(e.target).hasClass("swal2-actions")
+				&& !$(e.target).hasClass("swal2-icon") && !$(e.target).hasClass("swal2-icon-content") && !$(e.target).hasClass("swal2-html-container")) {
+			$('.swal2-container').attr('class', 'swal2-container swal2-center swal2-backdrop-hide');
+			$('.swal2-popup').attr('swal2-popup swal2-modal swal2-icon-info swal2-hide');
+			setTimeout(function() {
+				$('.swal2-container').detach();
+			}, 100);
+		}
+	});
+
+
+	$(document).on('click', '#sideEvent', function(){
+		$(location).attr("href", "event.do");
+	});
+	
+	$(document).on('click', '#sideBasket', function(){
+		$(location).attr("href", "basket.do");
+	})
+	
+	$(document).on('click', '.header__toggle-button', function(){
+		$('html').attr('class', 'mode-popup');
+		$.ajax({
+			url : 'sideMune.do',
+			dataType : 'html',
+			success : function(htmlOut){
+				$('#header-area').after(htmlOut);
+			}
+		})
+	});
+	$(document).on('click', '.side-nav__overlay', function(e){
+		if (!$(e.target).hasClass(".side-nav__wrap")) {
+			$('.side-nav').attr('class', 'side-nav side-nav-leave-active side-nav-leave-to');
+			$('html').removeClass('mode-popup');
+			setTimeout(function() {
+				$('.side-nav').detach();
+			}, 350);
+		}
+	});
+	
 	$('.category-tab-content').children().on('click', function(){
 		$(this).addClass('active-category');
 		$(this).siblings().removeClass('active-category');
@@ -77,6 +153,33 @@ $(function() {
         	},
         	success : function(htmlOut){
         		$('.row').html(htmlOut);
+        	}
+        })
+    });
+	
+	$('.category-tab-content00').children().on('click', function(){
+		$(this).addClass('active-category00');
+		$(this).siblings().removeClass('active-category00');
+	});
+	
+	// ajax 태그기능 넣을 함수
+	$(document).on("click", ".active-category00", function(event){
+        // 동적으로 여러 태그가 생성된 경우라면 이런식으로 클릭된 객체를 this 키워드를 이용해서 잡아올 수 있다.
+        var tagNum = $(this).attr('id');
+        var tagMainNum = $(this).next().attr('value');
+        $.ajax({
+        	url : 'tag.do',
+        	type : 'post',
+        	dataType : 'html',
+        	data : {
+        		"tagNum" : tagNum
+        	},
+        	success : function(htmlOut){
+        		if(tagNum % 100 != 0){
+        			$('.row' + tagMainNum).html(htmlOut);
+        		}else{
+        			$('.row' + tagNum).html(htmlOut);
+        		}
         	}
         })
     });
@@ -105,102 +208,103 @@ $(function() {
 	<div id="__nuxt">
 		<div id="__layout">
 			<main class="viewport" data-v-0f5971ec="">
-				<header id="header-area" class="header" data-v-7aa1f9b4=""
-					data-v-0f5971ec="">
-					<div id="header__body" class="header__body" data-v-7aa1f9b4="">
-						<div class="header__top" data-v-7aa1f9b4="">
-							<a href="/info" class="header__top-left" data-v-7aa1f9b4=""></a>
-							<div class="header__top-right" data-v-7aa1f9b4="">
+				<header data-v-7aa1f9b4="" data-v-1739428d="" id="header-area"
+					class="header">
+					<div data-v-7aa1f9b4="" class="header-banner-wrap">
+						<!---->
+					</div>
+					<div data-v-7aa1f9b4="" id="header__body" class="header__body">
+						<div data-v-7aa1f9b4="" class="header__top">
+							<a data-v-7aa1f9b4="" href="/info" class="header__top-left"></a>
+							<div data-v-7aa1f9b4="" class="header__top-right">
+							
 								<c:choose>
-									<c:when test="${empty name}">
-										<a href="/user/signup" data-v-7aa1f9b4="">회원가입</a>
-										<a data-v-7aa1f9b4="" href="login.do">로그인</a>
-									</c:when>
-									<c:otherwise>
-										<a href="/mypage/orders" id="nickname" data-v-7aa1f9b4>${name } <span data-v-7aa1f9b4>님</span></a>
-									</c:otherwise>
-								</c:choose>
-									<span data-v-7aa1f9b4="">1:1문의</span>
-								<a href="https://forms.gle/92o1ctx6U4CYe2yF9" target="_blank"
-									data-v-7aa1f9b4="">B2B 신청</a>
+										<c:when test="${empty member.gender}">
+											<a href="signup.do" data-v-30697495="">회원가입</a>
+											<a data-v-30697495="" href="login.do">로그인</a>
+										</c:when>
+										<c:otherwise>
+											<a href="myPayInfo.do" id="nickname" data-v-30697495>${member.name } <span data-v-30697495>님</span></a>
+										</c:otherwise>
+									</c:choose>
+								<span data-v-7aa1f9b4="">1:1문의</span> <a data-v-7aa1f9b4=""
+									href="https://forms.gle/92o1ctx6U4CYe2yF9" target="_blank">B2B
+									신청</a>
 							</div>
 						</div>
 						<!---->
-						<div class="header__logo" data-v-7aa1f9b4="">
-							<a href="/" class="nuxt-link-active" data-v-7aa1f9b4=""></a>
+						<div data-v-7aa1f9b4="" class="header__logo">
+							<a data-v-7aa1f9b4="" href="main.do" class="nuxt-link-active"></a>
 							<!---->
 						</div>
 						<form name="paging">
 							<input type="hidden" name="tagMain01" value="">
 							<input type="hidden" name="itemCode01" value="">
+							<input type="hidden" name="tagSub01" value="">
 						</form>
-						<nav class="header__menus" data-v-7aa1f9b4="">
+						<nav data-v-7aa1f9b4="" class="header__menus">
 							<div data-v-7aa1f9b4="">
-								<div class="dropdown" data-v-7aa1f9b4="">
-									<span class="item" data-v-7aa1f9b4="">전체 카테고리</span>
-									<div class="dropdown" data-v-7aa1f9b4="">
+								<div data-v-7aa1f9b4="" class="dropdown">
+									<span data-v-7aa1f9b4="" class="item">전체 카테고리</span>
+									<div data-v-7aa1f9b4="" class="dropdown">
 										<ul data-v-7aa1f9b4="">
-											<li data-v-7aa1f9b4=""><a href="javascript:page_move(0);"
-												class="nuxt-link-active" data-v-7aa1f9b4=""> 전체보기 </a></li>
-											<li data-v-7aa1f9b4=""><a href="javascript:page_move(200);"
-												class="nuxt-link-exact-active nuxt-link-active"
-												data-v-7aa1f9b4="" aria-current="page"> 샐러드 </a></li>
-											<li data-v-7aa1f9b4=""><a href="javascript:page_move(100);"
-												data-v-7aa1f9b4="" class="new"> 정기구독 </a></li>
-											<li data-v-7aa1f9b4=""><a href="javascript:page_move(300);"
-												data-v-7aa1f9b4="" class="new"> 샌드위치·랩 </a></li>
-											<li data-v-7aa1f9b4=""><a href="javascript:page_move(400);"
-												data-v-7aa1f9b4="" class="new"> 도시락·간편식 </a></li>
-											<li data-v-7aa1f9b4=""><a href="javascript:page_move(500);"
-												data-v-7aa1f9b4="" class=""> 죽·스프 </a></li>
-											<li data-v-7aa1f9b4=""><a href="javascript:page_move(600);"
-												data-v-7aa1f9b4="" class="new"> 세트상품 </a></li>
-											<li data-v-7aa1f9b4=""><a href="javascript:page_move(700);"
-												data-v-7aa1f9b4="" class="new"> 간식 </a></li>
-											<li data-v-7aa1f9b4=""><a href="javascript:page_move(800);"
-												data-v-7aa1f9b4="" class="new"> 음료 </a></li>
-											<li data-v-7aa1f9b4=""><a href="javascript:page_move(1);"
-												data-v-7aa1f9b4="" class="new"> 초코베리머치 </a></li>
-<!-- 											<li data-v-7aa1f9b4=""><a href="/menu/soon" -->
-<!-- 												data-v-7aa1f9b4="" class=""> 오픈예정 </a></li> -->
+											<li data-v-7aa1f9b4=""><a data-v-7aa1f9b4=""
+												href="javascript:page_move(0);" class=""> 전체보기 </a></li>
+											<li data-v-7aa1f9b4=""><a data-v-7aa1f9b4=""
+												href="javascript:page_move(200);" class=""> 샐러드 </a></li>
+											<li data-v-7aa1f9b4=""><a data-v-7aa1f9b4=""
+												href="javascript:page_move(100);" class="new"> 정기구독 </a></li>
+											<li data-v-7aa1f9b4=""><a data-v-7aa1f9b4=""
+												href="javascript:page_move(300);" class="new"> 샌드위치·랩 </a></li>
+											<li data-v-7aa1f9b4=""><a data-v-7aa1f9b4=""
+												href="javascript:page_move(400);" class="new"> 도시락·간편식 </a></li>
+											<li data-v-7aa1f9b4=""><a data-v-7aa1f9b4=""
+												href="javascript:page_move(500);" class=""> 죽·스프 </a></li>
+											<li data-v-7aa1f9b4=""><a data-v-7aa1f9b4=""
+												href="javascript:page_move(600);" class="new"> 세트상품 </a></li>
+											<li data-v-7aa1f9b4=""><a data-v-7aa1f9b4=""
+												href="javascript:page_move(700);" class="new"> 간식 </a></li>
+											<li data-v-7aa1f9b4=""><a data-v-7aa1f9b4=""
+												href="javascript:page_move(800);" class="new"> 음료 </a></li>
+											<li data-v-7aa1f9b4=""><a data-v-7aa1f9b4=""
+												href="javascript:page_move(1);" class="new"> 초코베리머치 </a></li>
 										</ul>
 									</div>
 								</div>
-								<a href="javascript:page_move(100);" class="item" data-v-7aa1f9b4="">정기구독
-								</a><a href="javascript:page_move(200);"
-									class="item nuxt-link-exact-active nuxt-link-active"
-									data-v-7aa1f9b4="" aria-current="page">샐러드 </a><a
-									href="javascript:page_move(300);" class="item" data-v-7aa1f9b4="">샌드위치·랩
-								</a><a href="javascript:page_move(1);" class="item" data-v-7aa1f9b4="">초코베리머치
-								</a><a href="/event" class="item" data-v-7aa1f9b4="">이벤트 </a><a
-									href="/fcospot" class="item" data-v-7aa1f9b4="">프코스팟 </a>
+								<a data-v-7aa1f9b4="" href="javascript:page_move(100);" class="item">정기구독
+								</a><a data-v-7aa1f9b4="" href="javascript:page_move(200);" class="item">샐러드 </a><a
+									data-v-7aa1f9b4="" href="javascript:page_move(300);" class="item">샌드위치·랩
+								</a><a data-v-7aa1f9b4="" href="javascript:page_move(1);" class="item">초코베리머치
+								</a><a data-v-7aa1f9b4="" href="event.do" class="item">이벤트 </a><a
+									data-v-7aa1f9b4="" href="/fcospot" class="item">프코스팟 </a>
 							</div>
-							<div class="header__menus-side" data-v-7aa1f9b4="">
-								<a href="/search" class="search-logo" data-v-7aa1f9b4=""><img
-									src="/images/ic-navi-search@3x.png" alt="메뉴 검색"
-									class="search-logo-img" style="width: 24px; height: 24px;"
-									data-v-7aa1f9b4="">
-									<div data-v-7aa1f9b4="">검색</div></a> <a href="basket.do"
-									class="cart-logo-wrap item" data-v-7aa1f9b4=""><div
-										alt="프레시코드 장바구니" class="cart-logo empty" data-v-7aa1f9b4="">
+							<div data-v-7aa1f9b4="" class="header__menus-side">
+								<a data-v-7aa1f9b4="" href="search.do" class="search-logo"><img
+									data-v-7aa1f9b4="" src="https://saladits3.s3.ap-northeast-2.amazonaws.com/Logo/icon_search_gray.PNG"
+									alt="메뉴 검색" class="search-logo-img"
+									style="width: 30px; height: 30px;">
+									<div data-v-7aa1f9b4="">검색</div></a> <a data-v-7aa1f9b4=""
+									href="basket.do" class="cart-logo-wrap item"><div
+										data-v-7aa1f9b4="" alt="프레시코드 장바구니" class="cart-logo empty">
 										<!---->
-									</div> <!----> 장바구니 </a> <a href="/order" class="item" data-v-7aa1f9b4=""><div
-										class="icon-order" data-v-7aa1f9b4=""></div> 바로주문 </a>
+									</div> <!----> 장바구니 </a> <a data-v-7aa1f9b4="" href="order.do" class="item"><div
+										data-v-7aa1f9b4="" class="icon-order"></div> 바로주문 </a>
 							</div>
 						</nav>
-						<div class="header__side" data-v-7aa1f9b4="">
-							<a href="/search" class="search-logo" data-v-7aa1f9b4=""><img
-								src="/images/ic-navi-search@3x.png" alt="메뉴 검색"
-								class="search-logo-img" style="width: 24px; height: 24px;"
-								data-v-7aa1f9b4=""></a> <a href="basket.do"
-								class="cart-logo-wrap item" data-v-7aa1f9b4=""><div
-									alt="프레시코드 장바구니" class="cart-logo empty" data-v-7aa1f9b4="">
+						<div data-v-7aa1f9b4="" class="header__side">
+							<a data-v-7aa1f9b4="" href="search.do" class="search-logo"><img
+								data-v-7aa1f9b4="" src="https://saladits3.s3.ap-northeast-2.amazonaws.com/Logo/icon_search_gray.PNG"
+								alt="메뉴 검색" class="search-logo-img"
+								style="width: 30px; height: 30px;"></a> <a data-v-7aa1f9b4=""
+								href="basket.do" class="cart-logo-wrap item"><div style="width: 24px; height: 24px;"
+									data-v-7aa1f9b4="" alt="프레시코드 장바구니" class="cart-logo empty">
 									<!---->
 								</div></a>
-							<nav class="header__toggle-button" data-v-7aa1f9b4="">
-								<button type="button" data-v-7aa1f9b4="">
-									<img src="/images/header-img/menu_new@2x.png" alt="user-menu"
-										style="width: 24px; height: 24px;" data-v-7aa1f9b4="">
+							<nav data-v-7aa1f9b4="" class="header__toggle-button">
+								<button data-v-7aa1f9b4="" type="button">
+									<img data-v-7aa1f9b4=""
+										src="https://saladits3.s3.ap-northeast-2.amazonaws.com/Logo/icon_menu.PNG" alt="user-menu"
+										style="width: 30px; height: 30px;">
 								</button>
 							</nav>
 						</div>
@@ -228,54 +332,50 @@ $(function() {
 								<div class="all-menus-list-wrap" data-v-7aa1f9b4="">
 									<ul class="all-menus-list js-all-menus-list" data-v-7aa1f9b4="">
 										<li class="all-menus-item" data-v-7aa1f9b4=""><a
-											href="javascript:page_move(0);"
-											class="nuxt-link-active js-all-menus-item-link-0 all-menus-item-link"
+											href="javascript:page_move(0);" id="menu0"
+											class="all-menus-item-link"
 											data-v-7aa1f9b4=""> 전체보기 </a></li>
 										<li class="all-menus-item" data-v-7aa1f9b4=""><a
-											href="javascript:page_move(200);"
-											class="nuxt-link-exact-active nuxt-link-active js-all-menus-item-link-2 all-menus-item-link"
+											href="javascript:page_move(200);" id="menu200"
+											class="all-menus-item-link"
 											data-v-7aa1f9b4="" aria-current="page"> 샐러드 </a></li>
 										<li class="all-menus-item" data-v-7aa1f9b4=""><a
-											href="javascript:page_move(100);"
-											class="js-all-menus-item-link-1 all-menus-item-link new"
+											href="javascript:page_move(100);" id="menu100"
+											class="all-menus-item-link new"
 											data-v-7aa1f9b4=""> 정기구독 </a></li>
 										<li class="all-menus-item" data-v-7aa1f9b4=""><a
-											href="javascript:page_move(300);"
-											class="js-all-menus-item-link-3 all-menus-item-link new"
+											href="javascript:page_move(300);" id="menu300"
+											class="all-menus-item-link new"
 											data-v-7aa1f9b4=""> 샌드위치·랩 </a></li>
 										<li class="all-menus-item" data-v-7aa1f9b4=""><a
-											href="javascript:page_move(400);"
-											class="js-all-menus-item-link-4 all-menus-item-link new"
+											href="javascript:page_move(400);" id="menu400"
+											class="all-menus-item-link new"
 											data-v-7aa1f9b4=""> 도시락·간편식 </a></li>
 										<li class="all-menus-item" data-v-7aa1f9b4=""><a
-											href="javascript:page_move(500);"
-											class="js-all-menus-item-link-10 all-menus-item-link"
+											href="javascript:page_move(500);" id="menu500"
+											class="all-menus-item-link"
 											data-v-7aa1f9b4=""> 죽·스프 </a></li>
 										<li class="all-menus-item" data-v-7aa1f9b4=""><a
-											href="javascript:page_move(600);"
-											class="js-all-menus-item-link-5 all-menus-item-link new"
+											href="javascript:page_move(600);" id="menu600"
+											class="all-menus-item-link new"
 											data-v-7aa1f9b4=""> 세트상품 </a></li>
 										<li class="all-menus-item" data-v-7aa1f9b4=""><a
-											href="javascript:page_move(700);"
-											class="js-all-menus-item-link-6 all-menus-item-link new"
+											href="javascript:page_move(700);" id="menu700"
+											class="all-menus-item-link new"
 											data-v-7aa1f9b4=""> 간식 </a></li>
 										<li class="all-menus-item" data-v-7aa1f9b4=""><a
-											href="javascript:page_move(800);"
-											class="js-all-menus-item-link-7 all-menus-item-link new"
+											href="javascript:page_move(800);" id="menu800"
+											class="all-menus-item-link new"
 											data-v-7aa1f9b4=""> 음료 </a></li>
 										<li class="all-menus-item" data-v-7aa1f9b4=""><a
-											href="javascript:page_move(1);"
-											class="js-all-menus-item-link-8 all-menus-item-link new"
+											href="javascript:page_move(1);" id="menu1"
+											class="all-menus-item-link new"
 											data-v-7aa1f9b4=""> 초코베리머치 </a></li>
-										<li class="all-menus-item" data-v-7aa1f9b4=""><a
-											href="/menu/soon"
-											class="js-all-menus-item-link-9 all-menus-item-link"
-											data-v-7aa1f9b4=""> 오픈예정 </a></li>
 									</ul>
 								</div>
 								<div class="all-menus-shadow" data-v-7aa1f9b4=""></div>
 								<div class="all-menus-arrow-wrap" data-v-7aa1f9b4="">
-									<img src="/images/icon-arrow-down@2x.png" alt=""
+									<img src="https://saladits3.s3.ap-northeast-2.amazonaws.com/Logo/icon_arrow_down_s.png" alt=""
 										class="all-menus-arrow" data-v-7aa1f9b4="">
 								</div>
 							</div>
@@ -298,92 +398,198 @@ $(function() {
 						</div>
 						<article data-v-4c9a9e82="" class="menus">
 							<div data-v-4c9a9e82="" class="menus__body">
-								<section data-v-4c9a9e82="" id="content_salad"
-									class="menus__section">
-										<h3 data-v-4c9a9e82="" class="category-title">${tagInfo[0].tagNameMain }</h3>
-										<c:if test="${itemInfo[0].tagMain != 700 && itemInfo[0].tagMain != 800 && itemInfo[0].tagMain != 1}">
-											<div data-v-0ca25db4="" data-v-4c9a9e82="" class="category-tab">
-												<div data-v-0ca25db4="" class="category-tab-content">
-													<div data-v-0ca25db4="" class="active-category" id="${itemInfo[0].tagMain }">전체</div>
-													<c:forEach var="tag" items="${tagInfo }">
-														<div data-v-0ca25db4="" class="" id="${tag.tagSub }">${tag.tagNameSub }</div>
-													</c:forEach>
+							
+							
+								<c:if test="${tagMain != 0 }">
+									<section data-v-4c9a9e82="" id="content_salad"
+										class="menus__section">
+											<h3 data-v-4c9a9e82="" class="category-title">${tagInfo[0].tagNameMain }</h3>
+											<c:if test="${itemInfo[0].tagMain != 700 && itemInfo[0].tagMain != 800 && itemInfo[0].tagMain != 1}">
+												<div data-v-0ca25db4="" data-v-4c9a9e82="" class="category-tab">
+													<div data-v-0ca25db4="" class="category-tab-content">
+														<div data-v-0ca25db4="" class="active-category" id="${itemInfo[0].tagMain }">전체</div>
+														<c:forEach var="tag" items="${tagInfo }">
+															<div data-v-0ca25db4="" id="${tag.tagSub }">${tag.tagNameSub }</div>
+														</c:forEach>
+													</div>
 												</div>
-											</div>
-										</c:if>
-									<div data-v-4c9a9e82="" class="menus-index">
-										<ul data-v-4c9a9e82="" class="row">
-										
-										
-										<c:forEach var="item" items="${itemInfo }">
-											<li data-v-4c9a9e82="" class="col-6 col--lg-3">
-											<article
-													data-v-15082832="" data-v-4c9a9e82=""
-													class="item for-loop-cloned-item-244">
-													<input type="hidden" value="${item.itemCode }" id="itemCode">
-													<input type="hidden" value="${item.tagMain }" id="tagMain">
-													<div data-v-15082832="" class="for-loop-cloned-item-244">
-														<figure data-v-15082832=""
-															class="item__image for-loop-cloned-item-244">
-															<div data-v-15082832=""
-																class="item-badge for-loop-cloned-item-244">
-																<!---->
-															</div>
-															<img data-v-15082832=""
-																src="${item.itemImage }"
-																alt="${item.itemName } " title="${item.itemName } "
-																class="for-loop-cloned-item-244">
-														</figure>
-														<div data-v-15082832=""
-															class="item__body for-loop-cloned-item-244">
-															<!---->
-															<strong data-v-15082832=""
-																class="for-loop-cloned-item-244">${item.itemName }</strong>
-															<div data-v-15082832=""
-																class="for-loop-cloned-item-244 options">
-																<dl data-v-15082832=""
-																	class="for-loop-cloned-item-244 row--v">
-																	<dd data-v-15082832="" class="for-loop-cloned-item-244">
-																		<em data-v-15082832=""
-																			class="for-loop-cloned-item-244"><b>${item.itemPriceM }원</b></em>~ <span
-																			data-v-15082832="" class="for-loop-cloned-item-244">
-																			<c:if test="${item.itemPriceMSub ne ''}">
-																					${item.itemPriceMSub }
-																			</c:if>
-																			</span>
-																	</dd>
-																</dl>
-															</div>
-															<span data-v-15082832="" class="for-loop-cloned-item-244">${item.itemSummary }</span>
-															<div data-v-15082832=""
-																class="item-bottom for-loop-cloned-item-244 row--v-center row--h-between">
+											</c:if>
+										<div data-v-4c9a9e82="" class="menus-index">
+											<ul data-v-4c9a9e82="" class="row">
+											
+											<c:forEach var="item" items="${itemInfo }">
+												<li data-v-4c9a9e82="" class="col-6 col--lg-3">
+												<article
+														data-v-15082832="" data-v-4c9a9e82=""
+														class="item for-loop-cloned-item-244">
+														<input type="hidden" value="${item.itemCode }" id="itemCode">
+														<input type="hidden" value="${item.tagMain }" id="tagMain">
+														<input type="hidden" value="${item.tagSub }" id="tagSub">
+														<div data-v-15082832="" class="for-loop-cloned-item-244">
+															<figure data-v-15082832=""
+																class="item__image for-loop-cloned-item-244">
 																<div data-v-15082832=""
-																	class="for-loop-cloned-item-244 info-wrap">
-																	<span data-v-15082832=""
-																		class="for-loop-cloned-item-244 star-info">${item.starAvg }</span>
-																	<span data-v-15082832=""
-																		class="for-loop-cloned-item-244 review-info">${item.reviewCount }</span>
+																	class="item-badge for-loop-cloned-item-244">
+																	<!---->
 																</div>
+																<img data-v-15082832=""
+																	src="${item.itemImage }"
+																	alt="${item.itemName } " title="${item.itemName } "
+																	class="for-loop-cloned-item-244">
+															</figure>
+															<div data-v-15082832=""
+																class="item__body for-loop-cloned-item-244">
+																<!---->
+																<strong data-v-15082832=""
+																	class="for-loop-cloned-item-244">${item.itemName }</strong>
 																<div data-v-15082832=""
-																	class="row--v-center for-loop-cloned-item-244 tag-wrap">
+																	class="for-loop-cloned-item-244 options">
+																	<dl data-v-15082832=""
+																		class="for-loop-cloned-item-244 row--v">
+																		<dd data-v-15082832="" class="for-loop-cloned-item-244">
+																			<em data-v-15082832=""
+																				class="for-loop-cloned-item-244"><b>${item.itemPriceM }원</b></em>~ <span
+																				data-v-15082832="" class="for-loop-cloned-item-244">
+																				<c:if test="${item.itemPriceMSub ne ''}">
+																						${item.itemPriceMSub }
+																				</c:if>
+																				</span>
+																		</dd>
+																	</dl>
+																</div>
+																<span data-v-15082832="" class="for-loop-cloned-item-244">${item.itemSummary }</span>
+																<div data-v-15082832=""
+																	class="item-bottom for-loop-cloned-item-244 row--v-center row--h-between">
 																	<div data-v-15082832=""
-																		class="for-loop-cloned-item-244 row--v-center">
-<!-- 																		<div data-v-15082832="" -->
-<!-- 																			class="for-loop-cloned-item-244 vegi-tag md-item-vegi-tag"> -->
-<!-- 																			락토베지테리언</div> -->
+																		class="for-loop-cloned-item-244 info-wrap">
+																		<span data-v-15082832=""
+																			class="for-loop-cloned-item-244 star-info">${item.starAvg }</span>
+																		<span data-v-15082832=""
+																			class="for-loop-cloned-item-244 review-info">${item.reviewCount }</span>
+																	</div>
+																	<div data-v-15082832=""
+																		class="row--v-center for-loop-cloned-item-244 tag-wrap">
+																		<div data-v-15082832=""
+																			class="for-loop-cloned-item-244 row--v-center">
+	<!-- 																		<div data-v-15082832="" -->
+	<!-- 																			class="for-loop-cloned-item-244 vegi-tag md-item-vegi-tag"> -->
+	<!-- 																			락토베지테리언</div> -->
+																		</div>
 																	</div>
 																</div>
 															</div>
 														</div>
+													</article>
+												</li>
+												</c:forEach>
+												
+											</ul>
+										</div>
+									</section>
+								</c:if>
+								
+								
+								
+								<c:if test="${tagMain == 0 }">
+									<c:forEach var="itemList" items="${itemInfo }" varStatus="i">
+										<section data-v-4c9a9e82="" id="content_salad" class="menus__section">
+										<article data-v-4c9a9e82="" class="menus">
+											<div data-v-4c9a9e82="" class="menus__body">
+											<section data-v-4c9a9e82="" id="content_salad" class="menus__section">
+											<h3 data-v-4c9a9e82="" class="category-title">${tagInfo[i.index][0].tagNameMain }</h3>
+											
+											<c:if test="${tagInfo[i.index][0].tagMain != 700 && tagInfo[i.index][0].tagMain != 800}">
+												<div data-v-0ca25db4="" data-v-4c9a9e82="" class="category-tab">
+													<div data-v-0ca25db4="" class="category-tab-content00">
+														<div data-v-0ca25db4="" class="active-category00" id="${tagInfo[i.index][0].tagMain }">전체</div>
+														<c:forEach var="tag" items="${tagInfo[i.index] }">
+															<div data-v-0ca25db4="" class="" id="${tag.tagSub }">${tag.tagNameSub }</div>
+															<input type="hidden" value="${tag.tagMain }">
+														</c:forEach>
 													</div>
-												</article>
-											</li>
-											</c:forEach>
-												
-												
-										</ul>
-									</div>
-								</section>
+												</div>
+											</c:if>
+										<div data-v-4c9a9e82="" class="menus-index">
+											<ul data-v-4c9a9e82="" class="row${tagInfo[i.index][0].tagMain }">
+											
+											<c:forEach var="item" items="${itemList }">
+												<li data-v-4c9a9e82="" class="col-6 col--lg-3">
+												<article
+														data-v-15082832="" data-v-4c9a9e82=""
+														class="item for-loop-cloned-item-244">
+														<input type="hidden" value="${item.itemCode }" id="itemCode">
+														<input type="hidden" value="${item.tagMain }" id="tagMain">
+														<input type="hidden" value="${item.tagSub }" id="tagSub">
+														<div data-v-15082832="" class="for-loop-cloned-item-244">
+															<figure data-v-15082832=""
+																class="item__image for-loop-cloned-item-244">
+																<div data-v-15082832=""
+																	class="item-badge for-loop-cloned-item-244">
+																	<!---->
+																</div>
+																<img data-v-15082832=""
+																	src="${item.itemImage }"
+																	alt="${item.itemName } " title="${item.itemName } "
+																	class="for-loop-cloned-item-244">
+															</figure>
+															<div data-v-15082832=""
+																class="item__body for-loop-cloned-item-244">
+																<!---->
+																<strong data-v-15082832=""
+																	class="for-loop-cloned-item-244">${item.itemName }</strong>
+																<div data-v-15082832=""
+																	class="for-loop-cloned-item-244 options">
+																	<dl data-v-15082832=""
+																		class="for-loop-cloned-item-244 row--v">
+																		<dd data-v-15082832="" class="for-loop-cloned-item-244">
+																			<em data-v-15082832=""
+																				class="for-loop-cloned-item-244"><b>${item.itemPriceM }원</b></em>~ <span
+																				data-v-15082832="" class="for-loop-cloned-item-244">
+																				<c:if test="${item.itemPriceMSub ne ''}">
+																						${item.itemPriceMSub }
+																				</c:if>
+																				</span>
+																		</dd>
+																	</dl>
+																</div>
+																<span data-v-15082832="" class="for-loop-cloned-item-244">${item.itemSummary }</span>
+																<div data-v-15082832=""
+																	class="item-bottom for-loop-cloned-item-244 row--v-center row--h-between">
+																	<div data-v-15082832=""
+																		class="for-loop-cloned-item-244 info-wrap">
+																		<span data-v-15082832=""
+																			class="for-loop-cloned-item-244 star-info">${item.starAvg }</span>
+																		<span data-v-15082832=""
+																			class="for-loop-cloned-item-244 review-info">${item.reviewCount }</span>
+																	</div>
+																	<div data-v-15082832=""
+																		class="row--v-center for-loop-cloned-item-244 tag-wrap">
+																		<div data-v-15082832=""
+																			class="for-loop-cloned-item-244 row--v-center">
+	<!-- 																		<div data-v-15082832="" -->
+	<!-- 																			class="for-loop-cloned-item-244 vegi-tag md-item-vegi-tag"> -->
+	<!-- 																			락토베지테리언</div> -->
+																		</div>
+																	</div>
+																</div>
+															</div>
+														</div>
+													</article>
+												</li>
+												</c:forEach>
+													
+													
+											</ul>
+										</div>
+										</section>
+										</div>
+										</article>
+									</section>
+									</c:forEach>
+								</c:if>
+								
+								
+								
 							</div>
 						</article>
 						<!---->

@@ -149,8 +149,7 @@
 					<!---->
 					<!---->
 				</header>
-				<div data-v-0f5971ec="" class="container"
-					style="padding-top: 182px;">
+				<div data-v-0f5971ec="" class="container">
 					<div data-v-421abad8="" data-v-89f34e0a="" data-v-0f5971ec=""
 						class="mypage-layout">
 						<div data-v-3e2784be="" data-v-421abad8=""

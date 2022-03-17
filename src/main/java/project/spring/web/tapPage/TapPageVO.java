@@ -10,6 +10,17 @@ public class TapPageVO {
 	private double starAvg;
 	private int reviewCount;
 	private int tagMain;
+	private int tagSub;
+	
+	
+
+	public int getTagSub() {
+		return tagSub;
+	}
+
+	public void setTagSub(int tagSub) {
+		this.tagSub = tagSub;
+	}
 
 	public int getTagMain() {
 		return tagMain;
@@ -111,12 +122,10 @@ public class TapPageVO {
 	public String toString() {
 		return "TapPageVO [itemCode=" + itemCode + ", itemImage=" + itemImage + ", itemName=" + itemName
 				+ ", itemSummary=" + itemSummary + ", itemPriceM=" + itemPriceM + ", itemPriceMSub=" + itemPriceMSub
-				+ ", starAvg=" + starAvg + ", reviewCount=" + reviewCount + ", tagMain=" + tagMain + ", getTagMain()="
-				+ getTagMain() + ", getItemCode()=" + getItemCode() + ", getItemImage()=" + getItemImage()
-				+ ", getItemName()=" + getItemName() + ", getItemSummary()=" + getItemSummary() + ", getItemPriceM()="
-				+ getItemPriceM() + ", getItemPriceMSub()=" + getItemPriceMSub() + ", getStarAvg()=" + getStarAvg()
-				+ ", getReviewCount()=" + getReviewCount() + ", getClass()=" + getClass() + ", hashCode()=" + hashCode()
-				+ ", toString()=" + super.toString() + "]";
+				+ ", starAvg=" + starAvg + ", reviewCount=" + reviewCount + ", tagMain=" + tagMain + ", tagSub="
+				+ tagSub + "]";
 	}
+
+	
 
 }

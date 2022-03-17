@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="MemberZipcodeDAO">
+
+	<select id="getZipcodeAmount" resultType="int">
+		select count(*) from member_zipcode where member_code = #{member_code} and member_delivery_type = #{member_delivery_type}
+	</select>
+	<select id="getZipcodeAll" resultType="myzipcode">
+		select * from member_zipcode where member_code = #{member_code} and member_delivery_type = #{member_delivery_type}
+	</select>
+	<select id="getZipcodeAll2" resultType="myzipcode">
+		select * from member_zipcode where member_zipcode_code = #{member_zipcode_code}
+	</select>
+	<insert id="insertZipcode">
+		INSERT INTO member_zipcode(member_code, member_zipcode, member_address, member_detail_address, member_shipping_address, member_default_address, member_delivery_type)
+		VALUES (#{member_code}, #{member_zipcode}, #{member_address}, #{member_detail_address}, #{member_shipping_address}, #{member_default_address}, #{member_delivery_type})
+	</insert>
+	<update id="updateZipcodeDefaultAddress">
+		UPDATE member_zipcode SET member_default_address = #{member_default_address} WHERE member_zipcode_code = #{member_zipcode_code}
+	</update>
+</mapper>

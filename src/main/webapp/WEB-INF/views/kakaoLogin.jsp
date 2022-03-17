@@ -16,7 +16,7 @@ Kakao.init("b29c4bcaabe590d66acd1deef6bf8246"); // 내 어플리케이션 고유
 // 	});
 
 Kakao.Auth.login({
-	scope:'profile_nickname, account_email, gender, birthday',
+	scope:'profile_nickname, account_email',
 	success: function(authObj){
 		
 // 		Kakao.API.request({
@@ -31,11 +31,29 @@ Kakao.Auth.login({
 				var id = res.id; // DB 의 primary Key 값 속성 즉 기본키의 식별성
 				var email = res.kakao_account.email;
 				var name = res.properties.nickname;
-				var birthday = res.kakao_account.birthday;
-				var gender = res.kakao_account.gender;
+// 				var birthday = res.kakao_account.birthday;
+// 				var gender = res.kakao_account.gender;
 // 						var html = '<br>' + email + '<br>' + name + '<br>' + birthday + '<br>' + gender + '<br>' + age_range;
 // 						alert(html);
-				location.href = "kakaoData.do?name=" + name + "&email=" + email + "&birthday=" + birthday + "&gender=" + gender;
+// 				location.href = "kakaoData.do?name=" + name + "&email=" + email +  "&gender=" + gender;
+				
+				var form = document.createElement('form'); // 폼객체 생성
+	           var objs;
+	           objs = document.createElement('input'); // 값이 들어있는 녀석의 형식
+	           objs.setAttribute('type', 'hidden'); // 값이 들어있는 녀석의 type
+	           objs.setAttribute('name', 'name'); // 객체이름
+	           objs.setAttribute('value', name); //객체값
+	           form.appendChild(objs);
+	           var objs1;
+	           objs1 = document.createElement('input'); // 값이 들어있는 녀석의 형식
+	           objs1.setAttribute('type', 'hidden'); // 값이 들어있는 녀석의 type
+	           objs1.setAttribute('name', 'email'); // 객체이름
+	           objs1.setAttribute('value', email); //객체값
+	           form.appendChild(objs1);
+	           form.setAttribute('method', 'post'); //get,post 가능
+	           form.setAttribute('action', "kakaoData.do"); //보내는 url
+	           document.body.appendChild(form);
+	           form.submit();
 			}
 		}); 
 //				console.log(authObj);

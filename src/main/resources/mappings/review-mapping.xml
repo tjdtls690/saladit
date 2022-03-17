@@ -2,24 +2,34 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="WriteReview">
+<mapper namespace="WriteReviewDAO">
 	<!-- resultMap 은 join 구문을 써서 VO클래스에 매핑이 불가능 할 시 -->
 	<!-- 직접 프로퍼티 하나하나 매핑 시켜주는 역할 -->
 	<!-- 지금 같은 상황에선 안써도 되지만 연습삼아 쓴다. -->
 	<!-- seq(reviewNym), itemNum, title -->
-	<resultMap type="myreview" id="reviewResult">
+	<resultMap type="myreview" id="reviewResult01">
 		<id property="seq" column="seq" />
-		<result property="itemNum" column="item_num" />
+		<result property="item_code" column="item_code" />
 		<result property="star" column="star" />
-		<result property="userName" column="user_name" />
+		<result property="user_name" column="user_name" />
 		<result property="content" column="content" />
-		<result property="writeDate" column="write_date" />
+		<result property="write_date" column="write_date" />
+		<result property="image" column="image" />
+		<result property="reply" column="reply" />
+	</resultMap>
+	<resultMap type="myreview" id="reviewResult02">
+		<id property="seq" column="seq" />
+		<result property="item_code" column="subscribe_code" />
+		<result property="star" column="star" />
+		<result property="user_name" column="user_name" />
+		<result property="content" column="content" />
+		<result property="write_date" column="write_date" />
 		<result property="image" column="image" />
 		<result property="reply" column="reply" />
 	</resultMap>
 	<insert id="insertReview" parameterType="myreview">
-		INSERT INTO reviewboard(item_num, star, user_name, content, image, reply)
-		VALUES(#{itemNum}, #{star}, #{userName}, #{content}, #{image}, #{reply})
+		INSERT INTO reviewboard(item_code, star, user_name, content, image, reply)
+		VALUES(#{item_code}, #{star}, #{user_name}, #{content}, #{image}, #{reply})
 	</insert>
 	<update id="updateReview" parameterType="myreview">
 		UPDATE reviewboard
@@ -34,18 +44,21 @@
 	<!-- 리턴값이 그냥 VO 값으로 넘어가면 resultType 을 쓰지만 -->
 	<!-- resultMap을 써야하는 경우 resultMap 속성을 써줘야 한다. -->
 	<!-- parameterType은 생략 가능 -->
-	<select id="getReviewList" resultMap="reviewResult">
-		SELECT * FROM reviewboard
-		<!-- if문이 전부 거짓이어서 적용 안될 시 
-		그래도 뒷문장이 전부 실행 되어서 전체 목록이 뜨게,
-		그리고 에러도 안나게끔 1=1 을 써준다. -->
-<!-- 		WHERE 1=1 -->
-<!-- 		<if test="searchCondition=='TITLE'"> -->
-<!-- 			AND title LIKE '%'||#{searchKeyword}||'%' -->
-<!-- 		</if> -->
-<!-- 		<if test="searchCondition=='CONTENT'"> -->
-<!-- 			AND content LIKE '%'||#{searchKeyword}||'%' -->
-<!-- 		</if> -->
+	<select id="getReviewList01" resultMap="reviewResult01">
+		SELECT * FROM reviewboard where item_code = ${item_code}
 		ORDER BY seq DESC
 	</select>
+	<select id="getReviewList02" resultMap="reviewResult02">
+		SELECT * FROM reviewboard where subscribe_code = ${subscribe_code}
+		ORDER BY seq DESC
+	</select>
+<!-- 	페이징처리 -->
+	<select id="selectBoardList" resultType="hashmap" parameterType="hashmap">
+        SELECT * FROM reviewboard WHERE item_code = #{item_code}
+        ORDER BY seq DESC LIMIT #{pageStart}, #{perPageNum}
+	</select>
+	<select id="countBoardList" resultType="Integer">
+        SELECT count(*) FROM reviewboard WHERE item_code = #{item_code}
+	</select>
+	
 </mapper>

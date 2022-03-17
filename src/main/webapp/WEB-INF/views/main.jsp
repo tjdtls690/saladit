@@ -1,12 +1,13 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib uri = "http://java.sun.com/jsp/jstl/functions" prefix = "fn" %>
 <c:set var="path" value="${pageContext.request.contextPath}/resources/main"/>
 <!DOCTYPE html>
 <html>
 <head>
 	<meta charset="UTF-8">
-<title>프레시코드 - 샐러드 구독·건강간편식 프리미엄 배송 서비스</title>
+<title>샐러딧 - 샐러드 구독·건강간편식 프리미엄 배송 서비스</title>
 <meta data-n-head="ssr" charset="utf-8">
 <meta data-n-head="ssr" name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, minimal-ui, viewport-fit=cover, user-scalable=no">
 <meta data-n-head="ssr" data-hid="subject" name="subject" content="프레시코드 - 프리미엄 샐러드 배달 서비스">
@@ -34,25 +35,25 @@
 <meta data-n-head="ssr" data-hid="fb:app_id" property="fb:app_id"
 	content="323001348061168">
 <link data-n-head="ssr" rel="icon" type="image/x-icon"
-	href="/fc-favicon-16.png" sizes="16x16">
+	href="https://saladits3.s3.ap-northeast-2.amazonaws.com/Logo/icon_leaf.png" sizes="16x16">
 <link data-n-head="ssr" rel="icon" type="image/x-icon"
-	href="/fc-favicon-24.png" sizes="24x24">
+	href="https://saladits3.s3.ap-northeast-2.amazonaws.com/Logo/icon_leaf.png" sizes="24x24">
 <link data-n-head="ssr" rel="icon" type="image/x-icon"
-	href="/fc-favicon-32.png" sizes="32x32">
+	href="https://saladits3.s3.ap-northeast-2.amazonaws.com/Logo/icon_leaf.png" sizes="32x32">
 <link data-n-head="ssr" rel="icon" type="image/x-icon"
-	href="/fc-favicon-57.png" sizes="57x57">
+	href="https://saladits3.s3.ap-northeast-2.amazonaws.com/Logo/icon_leaf.png" sizes="57x57">
 <link data-n-head="ssr" rel="icon" type="image/x-icon"
-	href="/fc-favicon-120.png" sizes="120x120">
+	href="https://saladits3.s3.ap-northeast-2.amazonaws.com/Logo/icon_leaf.png" sizes="120x120">
 <link data-n-head="ssr" rel="icon" type="image/x-icon"
-	href="/fc-favicon-152.png" sizes="152x152">
+	href="https://saladits3.s3.ap-northeast-2.amazonaws.com/Logo/icon_leaf.png" sizes="152x152">
 <link data-n-head="ssr" rel="icon" type="image/x-icon"
-	href="/fc-favicon-196.png" sizes="196x196">
+	href="https://saladits3.s3.ap-northeast-2.amazonaws.com/Logo/icon_leaf.png" sizes="196x196">
 <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css"> -->
 <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css"> -->
-  
-  <link href="${path}/css1/style.css" rel="stylesheet" type="text/css" />
+
+<link href="${path}/css1/style.css" rel="stylesheet" type="text/css" />
   <link rel="stylesheet" href="${path}/css/bootstrap.css?ver=1">
-  <link href="${path}/css1/style2.css?ver=1" rel="stylesheet" type="text/css" />
+  <link href="${path}/css1/style2.css?ver=3" rel="stylesheet" type="text/css" />
   <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
   <script src="https://developers.kakao.com/sdk/js/kakao.js"></script>
 <script type="text/javascript">
@@ -65,6 +66,16 @@ function page_move(tagNum){
 }
 
 $(function() {
+	
+	setInterval(function() {
+		$('#rightButton01').trigger("click");
+	}, 5000);
+	
+	setInterval(function() {
+		$('#rightButton02').trigger("click");
+	}, 5000);
+	
+	
     var lastScrollTop = 0,
     delta = 90;
     $(window).scroll(function(event){
@@ -74,13 +85,114 @@ $(function() {
     		if(window.innerWidth > 1023){
     			$(".header").css("top","-130px");
     		}else{
-    			$(".header").css("top","-50px");
+    			$(".header").css("top","0px");
     		}
     	}else{
     		$(".header").css("top","0px");
     	}
     	lastScrollTop = st;
     });
+    
+    $(document).on('click', '.mdLink', function(){
+    	var itemCode = $(this).children('#itemCode').val();
+    	var tagMain = $(this).children('#tagMain').val();
+    	var tagSub = $(this).children('#tagSub').val();
+    	
+    	var f = document.paging;
+    	var code = $(this).children('#itemCode').attr('value');
+    	var tag = $(this).children('#tagMain').attr('value');
+    	var tagSub = $(this).children('#tagSub').attr('value');
+    	f.tagMain01.value = tagMain;
+    	f.itemCode01.value = itemCode;
+    	f.tagSub01.value = tagSub;
+    	f.action="detail.do"; // 상세페이지 url 로 연결만 시키기
+    	f.method="post";
+    	f.submit();
+    })
+    
+    $(document).on('click', '#closeFinalCheck', function(){
+		$('.swal2-container').attr('class', 'swal2-container swal2-center swal2-backdrop-hide');
+		$('.swal2-popup').attr('swal2-popup swal2-modal swal2-icon-info swal2-hide');
+		setTimeout(function() {
+			$('.swal2-container').detach();
+		}, 100);
+	})
+	
+	$(document).on('click', '.swal2-container.swal2-center.swal2-backdrop-show', function(e){
+		if (!$(e.target).hasClass("swal2-popup") && !$(e.target).hasClass("swal2-header") && !$(e.target).hasClass("swal2-content") && !$(e.target).hasClass("swal2-actions")
+				&& !$(e.target).hasClass("swal2-icon") && !$(e.target).hasClass("swal2-icon-content") && !$(e.target).hasClass("swal2-html-container")) {
+			$('.swal2-container').attr('class', 'swal2-container swal2-center swal2-backdrop-hide');
+			$('.swal2-popup').attr('swal2-popup swal2-modal swal2-icon-info swal2-hide');
+			setTimeout(function() {
+				$('.swal2-container').detach();
+			}, 100);
+		}
+	});
+
+
+	$(document).on('click', '#sideEvent', function(){
+		$(location).attr("href", "event.do");
+	});
+	
+	$(document).on('click', '#sideBasket', function(){
+		$(location).attr("href", "basket.do");
+	})
+	
+	$(document).on('click', '.header__toggle-button', function(){
+		$('html').attr('class', 'mode-popup');
+		$.ajax({
+			url : 'sideMune.do',
+			dataType : 'html',
+			success : function(htmlOut){
+				$('#header-area').after(htmlOut);
+			}
+		})
+	});
+	$(document).on('click', '.side-nav__overlay', function(e){
+		if (!$(e.target).hasClass(".side-nav__wrap")) {
+			$('.side-nav').attr('class', 'side-nav side-nav-leave-active side-nav-leave-to');
+			$('html').removeClass('mode-popup');
+			setTimeout(function() {
+				$('.side-nav').detach();
+			}, 350);
+		}
+	});
+	
+	$(document).on('click', '.swiper-slide', function(){ 
+ 		var f = document.paging;
+ 		var code = $(this).children('#itemCode').attr('value');
+ 		var tag = $(this).children('#tagMain').attr('value');
+ 		var tagSub = $(this).children('#tagSub').attr('value');
+ 		f.tagMain01.value = tag;
+ 		f.itemCode01.value = code;
+ 		f.itemSub01.value = tagSub;
+ 		alert(code);
+ 		f.action="detail.do"; 
+ 		f.method="post";
+ 		f.submit();
+ 	})
+});
+
+new Swiper('.swiper-container', {
+	
+	slidesPerView : 4, // 동시에 보여줄 슬라이드 갯수
+	spaceBetween : 30, // 슬라이드간 간격
+	slidesPerGroup : 4, // 그룹으로 묶을 수, slidesPerView 와 같은 값을 지정하는게 좋음
+
+	// 그룹수가 맞지 않을 경우 빈칸으로 메우기
+	// 3개가 나와야 되는데 1개만 있다면 2개는 빈칸으로 채워서 3개를 만듬
+	loopFillGroupWithBlank : true,
+
+	loop : true, // 무한 반복
+
+	pagination : { // 페이징
+		el : '.swiper-pagination',
+		clickable : true, // 페이징을 클릭하면 해당 영역으로 이동, 필요시 지정해 줘야 기능 작동
+	},
+	navigation : { // 네비게이션
+		nextEl : '.swiper-button-next', // 다음 버튼 클래스명
+		prevEl : '.swiper-button-prev', // 이번 버튼 클래스명
+	},
 });
 </script>
 </head>
@@ -95,12 +207,12 @@ $(function() {
 								<a href="/info" class="header__top-left" data-v-30697495></a> 
 								<div class="header__top-right" data-v-30697495>
 									<c:choose>
-										<c:when test="${empty name}">
-											<a href="/user/signup" data-v-30697495="">회원가입</a>
+										<c:when test="${empty member.gender}">
+											<a href="signup.do" data-v-30697495="">회원가입</a>
 											<a data-v-30697495="" href="login.do">로그인</a>
 										</c:when>
 										<c:otherwise>
-											<a href="/mypage/orders" id="nickname" data-v-30697495>${name } <span data-v-30697495>님</span></a>
+											<a href="myPayInfo.do" id="nickname" data-v-30697495>${member.name } <span data-v-30697495>님</span></a>
 										</c:otherwise>
 									</c:choose>
 									<span data-v-30697495>1:1문의</span> 
@@ -114,12 +226,13 @@ $(function() {
 							</div> 
 							<form name="paging">
 								<input type="hidden" name="tagMain01" value="">
+								<input type="hidden" name="itemCode01" value="">
+								<input type="hidden" name="tagSub01" value="">
 							</form>
 							<nav class="header__menus" data-v-30697495>
 								<div data-v-30697495>
 									<div class="dropdown" data-v-30697495>
 										<span class="item" data-v-30697495>
-											<img src="https://saladits3.s3.ap-northeast-2.amazonaws.com/main/menuGray.PNG" alt="메뉴 검색" class="search-logo-img" style="width:24px;height:24px;" data-v-30697495>
 											전체 카테고리
 										</span> 
 										<div class="dropdown" data-v-30697495>
@@ -164,34 +277,34 @@ $(function() {
 									<a href="javascript:page_move(200);" class="item" data-v-30697495>샐러드</a>
 									<a href="javascript:page_move(300);" class="item" data-v-30697495>랩·샌드위치</a>
 									<a href="javascript:page_move(1);" class="item" data-v-30697495>초코베리머치</a>
-									<a href="/event" class="item" data-v-30697495>이벤트</a>
-									<a href="/fcospot" class="item" data-v-30697495>프코스팟</a>
+									<a href="event.do" class="item" data-v-30697495>이벤트</a>
+									<a href="purchase.do" class="item" data-v-30697495>프코스팟</a>
 								</div> 
 								<div class="header__menus-side" data-v-30697495>
-									<a href="/search" class="search-logo" data-v-30697495>
-										<img src="https://saladits3.s3.ap-northeast-2.amazonaws.com/main/search.PNG" alt="메뉴 검색" class="search-logo-img" style="width: 24px; height: 24px;" data-v-30697495> 
+									<a href="search.do" class="search-logo" data-v-30697495>
+										<img src="https://saladits3.s3.ap-northeast-2.amazonaws.com/Logo/icon_search_gray.PNG" alt="메뉴 검색" class="search-logo-img" style="width: 30px; height: 30px;" data-v-30697495> 
 										<div data-v-30697495>검색</div>
 									</a> 
 									<a href="basket.do" class="cart-logo-wrap item" data-v-30697495>
-										<img src="https://saladits3.s3.ap-northeast-2.amazonaws.com/main/baguni.PNG" alt="프레시코드 장바구니" class="cart-logo empty" style="width: 24px; height: 24px;" data-v-30697495>
+										<img src="https://saladits3.s3.ap-northeast-2.amazonaws.com/Logo/icon_baguni.PNG" alt="프레시코드 장바구니" class="cart-logo empty" style="width: 24px; height: 24px;" data-v-30697495>
 							          장바구니
 							        </a> 
-							        <a href="/order" class="item" data-v-30697495>
-							        <img src="https://saladits3.s3.ap-northeast-2.amazonaws.com/main/pay.PNG" class="icon-order" style="width: 24px; height: 24px;" data-v-30697495>
+							        <a href="order.do" class="item" data-v-30697495>
+							        <img src="https://saladits3.s3.ap-northeast-2.amazonaws.com/Logo/icon_pay.PNG" class="icon-order" style="width: 24px; height: 24px;" data-v-30697495>
 							          바로주문
 							        </a>
 							    </div>
 							   </nav> 
 							   <div class="header__side" data-v-30697495>
-							   		<a href="/search" class="search-logo" data-v-30697495>
-							   			<img src="https://saladits3.s3.ap-northeast-2.amazonaws.com/main/search.PNG" alt="메뉴 검색" class="search-logo-img" style="width: 24px; height: 24px;" data-v-30697495></a>
+							   		<a href="search.do" class="search-logo" data-v-30697495>
+							   			<img src="https://saladits3.s3.ap-northeast-2.amazonaws.com/Logo/icon_search_gray.PNG" alt="메뉴 검색" class="search-logo-img" style="width: 30px; height: 30px;" data-v-30697495></a>
 							   		</a> 
 							   		<a href="basket.do" class="cart-logo-wrap item" data-v-30697495>
-							   			<img src="https://saladits3.s3.ap-northeast-2.amazonaws.com/main/baguni.PNG" alt="프레시코드 장바구니" class="cart-logo empty" style="width: 24px; height: 24px;" data-v-30697495>
+							   			<img src="https://saladits3.s3.ap-northeast-2.amazonaws.com/Logo/icon_baguni.PNG" alt="프레시코드 장바구니" class="cart-logo empty" style="width: 24px; height: 24px;" data-v-30697495>
 							   		</a> 
 							   		<nav class="header__toggle-button" data-v-30697495>
 							   			<button type="button" data-v-30697495>
-							   				<img src="https://saladits3.s3.ap-northeast-2.amazonaws.com/main/menu.PNG" alt="user-menu" style="width: 24px; height: 24px;" data-v-30697495>
+							   				<img src="https://saladits3.s3.ap-northeast-2.amazonaws.com/Logo/icon_menu.PNG" alt="user-menu" style="width: 30px; height: 30px;" data-v-30697495>
 							   			</button>
 							   		</nav>
 								</div>
@@ -289,7 +402,7 @@ $(function() {
 						<!---->
 					</header> 
 						<div class="home" id="home" data-v-75a55e4e data-v-0f5971ec>
-							<div id="myCarousel" class="carousel slide" data-bs-ride="carousel" data-bs-interval="500">
+							<div id="myCarousel" class="carousel slide" data-interval="false" data-bs-wrap="true">
 						      <ol class="carousel-indicators">
 						          <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
 						         <li data-target="#myCarousel" data-slide-to="1"></li>
@@ -297,24 +410,24 @@ $(function() {
 						         <li data-target="#myCarousel" data-slide-to="3"></li>
 						         <li data-target="#myCarousel" data-slide-to="4"></li>
 						      </ol>
-						      <div class="carousel-inner" data-bs-interval="500">
-						         <div class="item active" data-bs-interval="500">
+						      <div class="carousel-inner" >
+						         <div class="item active">
 						            <img id="slide01" src="https://saladits3.s3.ap-northeast-2.amazonaws.com/banner/slide01.PNG">
 						            <img id="slide01_1" src="https://saladits3.s3.ap-northeast-2.amazonaws.com/banner/slide01_1.PNG">
 						         </div>
-						         <div class="item" data-bs-interval="500">
+						         <div class="item">
 						            <img id="slide02" src="https://saladits3.s3.ap-northeast-2.amazonaws.com/banner/slide02.PNG">
 						            <img id="slide02_1" src="https://saladits3.s3.ap-northeast-2.amazonaws.com/banner/slide02_1.PNG">
 						         </div>
-						         <div class="item" data-bs-interval="500">
+						         <div class="item">
 						            <img id="slide03" src="https://saladits3.s3.ap-northeast-2.amazonaws.com/banner/slide03.PNG">
 						            <img id="slide03_1" src="https://saladits3.s3.ap-northeast-2.amazonaws.com/banner/slide03_1.PNG">
 						         </div>
-						         <div class="item" data-bs-interval="500">
+						         <div class="item">
 						            <img id="slide04" src="https://saladits3.s3.ap-northeast-2.amazonaws.com/banner/slide04.PNG">
 						            <img id="slide04_1" src="https://saladits3.s3.ap-northeast-2.amazonaws.com/banner/slide04_1.PNG">
 						         </div>
-						         <div class="item" data-bs-interval="500">
+						         <div class="item">
 						            <img id="slide05" src="https://saladits3.s3.ap-northeast-2.amazonaws.com/banner/slide05.PNG">
 						            <img id="slide05_1" src="https://saladits3.s3.ap-northeast-2.amazonaws.com/banner/slide05_1.PNG">
 						         </div>
@@ -323,7 +436,7 @@ $(function() {
 						         <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
 						         <span class="sr-only">Previous</span>
 						      </a>
-						      <a class="right carousel-control" href="#myCarousel" role="button" data-slide="next">
+						      <a class="right carousel-control" id="rightButton01" href="#myCarousel" role="button" data-slide="next">
 						         <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
 						         <span class="sr-only">Next</span>
 						      </a>
@@ -334,139 +447,150 @@ $(function() {
 										data-v-7b0f70b9>
 										<h2 data-v-7b0f70b9>MD 추천</h2>
 									</header>
-								   <div id="pCarousel" class="carousel slide" data-bs-ride="carousel" data-bs-interval="3000" data-bs-wrap="true">
+								   <div id="pCarousel" class="carousel slide" data-interval="false" data-bs-wrap="true">
 								      <div class="carousel-inner">
-								         <div class="item active">
-								            <div class="section">
-								               <div class="row">
-								                  <div class="col-sm-3" style="text-align:left;">
-								                  	  <a href="testDetail.do">
-										                  <img id="MD01" src="https://saladits3.s3.ap-northeast-2.amazonaws.com/menu/700.%EA%B0%84%EC%8B%9D/menu_dessert700_10_00.png" width="320">
-										                  <img id="MD01_1" src="https://saladits3.s3.ap-northeast-2.amazonaws.com/menu/700.%EA%B0%84%EC%8B%9D/menu_dessert700_10_00.png" width="250">
-									              	  </a>
-									              </div>
-								                  <div class="rest"></div>
-								                  <div class="col-sm-3" style="text-align:left;"><a href="testDetail.do">
-								                  	  <img id="MD02" src="https://saladits3.s3.ap-northeast-2.amazonaws.com/menu/100.%EC%A0%95%EA%B8%B0%EA%B5%AC%EB%8F%85/%ED%83%9D%EB%B0%B0/sub_for_del7-00.png" width="320">
-									                  <img id="MD02_1" src="https://saladits3.s3.ap-northeast-2.amazonaws.com/menu/100.%EC%A0%95%EA%B8%B0%EA%B5%AC%EB%8F%85/%ED%83%9D%EB%B0%B0/sub_for_del7-00.png" width="250">
+										      <c:forEach var="item" items="${mdInfo }" varStatus="i">
+										      	<c:if test="${i.count % 3 == 1 }">
+										      		<c:if test="${i.count == 1 }">
+										      			<div class="item active">
+										      		</c:if>
+										      		<c:if test="${i.count != 1 }">
+										      			<div class="item">
+										      		</c:if>
+										      		<div class="section">
+										               <div class="row">
+										               <div class="col-sm-3" style="text-align:left;">
+										               	  <a href='javascript:void(0);' class="mdLink">
+										               	  	    <input type="hidden" value="${item.itemCode }" id="itemCode">
+																<input type="hidden" value="${item.tagMain }" id="tagMain">
+																<input type="hidden" value="${item.tagSub }" id="tagSub">
+											                  <img id="MD0${i.count }" src="${item.itemImage }" width="320">
+											                  <img id="MD0${i.count }_1" src="${item.itemImage }" width="250">
+										              	  </a>
+										              </div>
+									                  <div class="rest"></div>
+										      	</c:if>
+										      	<c:if test="${i.count % 3 == 2 }">
+										      	  <div class="col-sm-3" style="text-align:left;">
+										      	  	  <a href='javascript:void(0);' class="mdLink">
+										      	  	  			<input type="hidden" value="${item.itemCode }" id="itemCode">
+																<input type="hidden" value="${item.tagMain }" id="tagMain">
+																<input type="hidden" value="${item.tagSub }" id="tagSub">
+									                  	  <img id="MD0${i.count }" src="${item.itemImage }" width="320">
+										                  <img id="MD0${i.count }_1" src="${item.itemImage }" width="250">
 									                  </a>
 								                  </div>
 								                  <div class="rest"></div>
-								                  <div class="col-sm-3" style="text-align:left;"><a href="testDetail.do">
-								                  	  <img id="MD03" src="https://saladits3.s3.ap-northeast-2.amazonaws.com/menu/200.%EC%83%90%EB%9F%AC%EB%93%9C/204/menu_salad204_01_00.png" width="320">
-									                  <img id="MD03_1" src="https://saladits3.s3.ap-northeast-2.amazonaws.com/menu/200.%EC%83%90%EB%9F%AC%EB%93%9C/204/menu_salad204_01_00.png" width="250">
-									                  </a>
-								                  </div>
+										      	</c:if>
+										      	<c:if test="${i.count % 3 == 0 }">
+										      		<div class="col-sm-3" style="text-align:left;">
+										      			<a href='javascript:void(0);' class="mdLink">
+										      					<input type="hidden" value="${item.itemCode }" id="itemCode">
+																<input type="hidden" value="${item.tagMain }" id="tagMain">
+																<input type="hidden" value="${item.tagSub }" id="tagSub">
+										                  	  <img id="MD0${i.count }" src="${item.itemImage }" width="320">
+											                  <img id="MD0${i.count }_1" src="${item.itemImage }" width="250">
+										                </a>
+									                  </div>
 													<div class="rest"></div>
-								               </div>
-								               
-								               <div id="a1" class="col-sm-3" style="text-align:left;"><h4>[프코메이드]더블 다크 초코칩 쿠키<br><b>2322원 ~ </b><del>2700원</del><br></h4>
-								               		<span data-v-15082832="" class="for-loop-cloned-item-244"><a href="#"><img src="https://saladits3.s3.ap-northeast-2.amazonaws.com/banner/starinfo.PNG"></a>4.6</span>
-									                <span data-v-15082832="" class="for-loop-cloned-item-244"><a href="#"><img src="https://saladits3.s3.ap-northeast-2.amazonaws.com/banner/reviewinfo.PNG"></a>447</span>
-								               </div>
-								               <div class="col-sm-1"></div>
-								               <div id="a2" class="col-sm-3" style="text-align:left;"><h4>[택배/정기구독] 한끼 샐러드/샌드위치 교차<br><b>38606원 ~ </b><del>39800원</del></h4>
-								               		<span data-v-15082832="" class="for-loop-cloned-item-244"><a href="#"><img src="https://saladits3.s3.ap-northeast-2.amazonaws.com/banner/starinfo.PNG"></a>4.6</span>
-									                <span data-v-15082832="" class="for-loop-cloned-item-244"><a href="#"><img src="https://saladits3.s3.ap-northeast-2.amazonaws.com/banner/reviewinfo.PNG"></a>447</span>
-								               </div>
-								               <div class="col-sm-1"></div>
-								               <div id="a3" class="col-sm-3" style="text-align:left;"><h4>딸기 바닐라 크림치즈 샐러드<br><b>8010원 ~ </b><del>8900원</del></h4>
-								               		<span data-v-15082832="" class="for-loop-cloned-item-244"><a href="#"><img src="https://saladits3.s3.ap-northeast-2.amazonaws.com/banner/starinfo.PNG"></a>4.6</span>
-									                <span data-v-15082832="" class="for-loop-cloned-item-244"><a href="#"><img src="https://saladits3.s3.ap-northeast-2.amazonaws.com/banner/reviewinfo.PNG"></a>447</span>
-								               </div>
-								               <div class="col-sm-1"></div>
-								            </div>
-								         </div>
-								         <div class="item">
-								            <div class="section">
-								               <div class="row">
-								                  <div class="col-sm-3" style="text-align:left;"><a href="testDetail.do">
-								                      <img id="MD04" src="https://saladits3.s3.ap-northeast-2.amazonaws.com/menu/100.%EC%A0%95%EA%B8%B0%EA%B5%AC%EB%8F%85/%EC%83%88%EB%B2%BD/sub_for_dawn7-0.png" width="320">
-									                  <img id="MD04_1" src="https://saladits3.s3.ap-northeast-2.amazonaws.com/menu/100.%EC%A0%95%EA%B8%B0%EA%B5%AC%EB%8F%85/%EC%83%88%EB%B2%BD/sub_for_dawn7-0.png" width="250">
-								                  	  </a>
+									               </div>
+									               <c:forEach var="item2" items="${mdInfo }" varStatus="j" begin="${i.index-2 }" end="${i.index }">
+									               		<c:if test="${j.count % 3 == 1 || j.count % 3 == 2 }">
+									               		<a href='javascript:void(0);' class="mdLink">
+									               			<input type="hidden" value="${item2.itemCode }" id="itemCode">
+															<input type="hidden" value="${item2.tagMain }" id="tagMain">
+															<input type="hidden" value="${item2.tagSub }" id="tagSub">
+									               			<div id="a${j.count }" class="col-sm-3" style="text-align:left;"><h4>${item2.itemName }<br><b>${item2.itemPriceM }원 ~ </b><del>${item2.itemPriceMSub }</del><br></h4>
+											               		<span data-v-15082832="" class="for-loop-cloned-item-244"><img src="https://saladits3.s3.ap-northeast-2.amazonaws.com/banner/starinfo.PNG">${item2.starAvg }</span>
+												                <span data-v-15082832="" class="for-loop-cloned-item-244"><img src="https://saladits3.s3.ap-northeast-2.amazonaws.com/banner/reviewinfo.PNG">${item2.reviewCount }</span>
+											               </div>
+											            </a>
+											               <div class="col-sm-1"></div>
+									               		</c:if>
+									               		<c:if test="${j.count % 3 == 0 }">
+									               		<a href='javascript:void(0);' class="mdLink">
+									               			<input type="hidden" value="${item2.itemCode }" id="itemCode">
+															<input type="hidden" value="${item2.tagMain }" id="tagMain">
+															<input type="hidden" value="${item2.tagSub }" id="tagSub">
+									               			<div id="a${j.count }" class="col-sm-3" style="text-align:left;"><h4>${item2.itemName }<br><b>${item2.itemPriceM }원 ~ </b><del>${item2.itemPriceMSub }</del></h4>
+											               		<span data-v-15082832="" class="for-loop-cloned-item-244"><img src="https://saladits3.s3.ap-northeast-2.amazonaws.com/banner/starinfo.PNG">${item2.starAvg }</span>
+												                <span data-v-15082832="" class="for-loop-cloned-item-244"><img src="https://saladits3.s3.ap-northeast-2.amazonaws.com/banner/reviewinfo.PNG">${item2.reviewCount }</span>
+											               </div>
+											            </a>
+											               <div class="col-sm-1"></div>
+												            </div>
+												         </div>
+									               		</c:if>
+									               </c:forEach>
+										      	</c:if>
+										      	<a class="left carousel-control" href="#pCarousel"data-slide="prev">
+									               <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+									               <span class="sr-only">Previous</span>
+									            </a> 
+									            <a class="right carousel-control" id="rightButton02" href="#pCarousel" role="button" data-slide="next"> 
+									               <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+									               <span class="sr-only">Next</span>
+									            </a>
+										      </c:forEach>
+										      <c:if test="${fn:length(mdInfo) % 3 == 1 }">
+										      <div class="col-sm-3" style="text-align:left;">
+								                  	  <img id="MD02" src="" width="320">
+									                  <img id="MD02_1" src="" width="250">
 								                  </div>
-								                  <div class="rest"></div>
-								                  <div class="col-sm-3" style="text-align:left;"><a href="testDetail.do">
-								                      <img id="MD05" src="https://saladits3.s3.ap-northeast-2.amazonaws.com/menu/700.%EA%B0%84%EC%8B%9D/menu_dessert700_01_00.png" width="320">
-									                  <img id="MD05_1" src="https://saladits3.s3.ap-northeast-2.amazonaws.com/menu/700.%EA%B0%84%EC%8B%9D/menu_dessert700_01_00.png" width="250">
-								                  	  </a>
+												<div class="rest"></div>
+												<div class="col-sm-3" style="text-align:left;">
+								                  	  <img id="MD03" src="" width="320">
+									                  <img id="MD03_1" src="" width="250">
 								                  </div>
-								                  <div class="rest"></div>
-								                  <div class="col-sm-3" style="text-align:left;"><a href="testDetail.do">
-								                      <img id="MD06" src="https://saladits3.s3.ap-northeast-2.amazonaws.com/menu/100.%EC%A0%95%EA%B8%B0%EA%B5%AC%EB%8F%85/%EC%83%88%EB%B2%BD/sub_for_dawn3-0.png" width="320">
-									                  <img id="MD06_1" src="https://saladits3.s3.ap-northeast-2.amazonaws.com/menu/100.%EC%A0%95%EA%B8%B0%EA%B5%AC%EB%8F%85/%EC%83%88%EB%B2%BD/sub_for_dawn3-0.png" width="250">
-								                  	  </a>
-								                  </div>
-								                  <div class="rest"></div>
-								               </div>
-								               
-								               <div id="a4" class="col-sm-3" style="text-align:left;"><h4>[정기구독] 한끼 샐러드 주3일<br><b>25220원 ~ </b><del>26000원</del><br></h4>
-								               		<span data-v-15082832="" class="for-loop-cloned-item-244"><a href="#"><img src="https://saladits3.s3.ap-northeast-2.amazonaws.com/banner/starinfo.PNG"></a>4.6</span>
-									                <span data-v-15082832="" class="for-loop-cloned-item-244"><a href="#"><img src="https://saladits3.s3.ap-northeast-2.amazonaws.com/banner/reviewinfo.PNG"></a>447</span>
-								               </div>
-								               <div class="col-sm-1"></div>
-								               <div id="a5" class="col-sm-3" style="text-align:left;"><h4>[쿠캣] 딸기쏙우유 찹쌀떡<br><b>1260원 ~ </b><del>1400원</del></h4>
-								               		<span data-v-15082832="" class="for-loop-cloned-item-244"><a href="#"><img src="https://saladits3.s3.ap-northeast-2.amazonaws.com/banner/starinfo.PNG"></a>4.6</span>
-									                <span data-v-15082832="" class="for-loop-cloned-item-244"><a href="#"><img src="https://saladits3.s3.ap-northeast-2.amazonaws.com/banner/reviewinfo.PNG"></a>447</span>
-								               </div>
-								               <div class="col-sm-1"></div>
-								               <div id="a6" class="col-sm-3" style="text-align:left;"><h4>[새벽/정기구독] 600Kcal 유지어터<br><b>8352원 ~ </b><del>71200원</del></h4>
-								               		<span data-v-15082832="" class="for-loop-cloned-item-244"><a href="#"><img src="https://saladits3.s3.ap-northeast-2.amazonaws.com/banner/starinfo.PNG"></a>4.6</span>
-									                <span data-v-15082832="" class="for-loop-cloned-item-244"><a href="#"><img src="https://saladits3.s3.ap-northeast-2.amazonaws.com/banner/reviewinfo.PNG"></a>447</span>
-								               </div>
-								               <div class="col-sm-1"></div>
-								            </div>
-								         </div>
-								         <div class="item">
-								            <div class="section">
-								               <div class="row">
-								                  <div class="col-sm-3" style="text-align:left;"><a href="testDetail.do">
-								                      <img id="MD07" src="https://saladits3.s3.ap-northeast-2.amazonaws.com/menu/800.%EC%9D%8C%EB%A3%8C/menu_drink800_03_00.png" width="320">
-									                  <img id="MD07_1" src="https://saladits3.s3.ap-northeast-2.amazonaws.com/menu/800.%EC%9D%8C%EB%A3%8C/menu_drink800_03_00.png" width="250">
-								                  	  </a>
-								                  </div>
-								                  <div class="rest"></div>
-								                  <div class="col-sm-3" style="text-align:left;"><a href="testDetail.do">
-								                      <img id="MD08" src="https://saladits3.s3.ap-northeast-2.amazonaws.com/menu/100.%EC%A0%95%EA%B8%B0%EA%B5%AC%EB%8F%85/%ED%83%9D%EB%B0%B0/sub_for_del2-00.jpg" width="320">
-									                  <img id="MD08_1" src="https://saladits3.s3.ap-northeast-2.amazonaws.com/menu/100.%EC%A0%95%EA%B8%B0%EA%B5%AC%EB%8F%85/%ED%83%9D%EB%B0%B0/sub_for_del2-00.jpg" width="250">
-								                  	  </a>
-								                  </div>
-								                  <div class="rest"></div>
-								                  <div class="col-sm-3" style="text-align:left;"><a href="testDetail.do">
-								                      <img id="MD09" src="https://saladits3.s3.ap-northeast-2.amazonaws.com/menu/700.%EA%B0%84%EC%8B%9D/menu_dessert700_04_00.png" width="320">
-									                  <img id="MD09_1" src="https://saladits3.s3.ap-northeast-2.amazonaws.com/menu/700.%EA%B0%84%EC%8B%9D/menu_dessert700_04_00.png" width="250">
-								                  	  </a>
-								                  </div>
-								                  <div class="rest"></div>
-								               </div>
-								               
-								               <div id="a7" class="col-sm-3" style="text-align:left;"><h4>[파스퇴르] 바른목장 프리바이오틱스 딸기우유<br><b>2880원 ~ </b><del>3200원</del><br></h4>
-								               		<span data-v-15082832="" class="for-loop-cloned-item-244"><a href="#"><img src="https://saladits3.s3.ap-northeast-2.amazonaws.com/banner/starinfo.PNG"></a>4.6</span>
-									                <span data-v-15082832="" class="for-loop-cloned-item-244"><a href="#"><img src="https://saladits3.s3.ap-northeast-2.amazonaws.com/banner/reviewinfo.PNG"></a>447</span>
-								               </div>
-								               <div class="col-sm-1"></div>
-								               <div id="a8" class="col-sm-3" style="text-align:left;"><h4>[정기구독] 한끼 샐러드 주6일<br><b>46172원 ~ </b><del>47600원</del></h4>
-								               		<span data-v-15082832="" class="for-loop-cloned-item-244"><a href="#"><img src="https://saladits3.s3.ap-northeast-2.amazonaws.com/banner/starinfo.PNG"></a>4.6</span>
-									                <span data-v-15082832="" class="for-loop-cloned-item-244"><a href="#"><img src="https://saladits3.s3.ap-northeast-2.amazonaws.com/banner/reviewinfo.PNG"></a>447</span>
-								               </div>
-								               <div class="col-sm-1"></div>
-								               <div id="a9" class="col-sm-3" style="text-align:left;"><h4>[숲골] 프로바이오 요거트 3종<br><b>1260원 ~ </b><del>1400원</del></h4>
-								               		<span data-v-15082832="" class="for-loop-cloned-item-244"><a href="#"><img src="https://saladits3.s3.ap-northeast-2.amazonaws.com/banner/starinfo.PNG"></a>4.6</span>
-									                <span data-v-15082832="" class="for-loop-cloned-item-244"><a href="#"><img src="https://saladits3.s3.ap-northeast-2.amazonaws.com/banner/reviewinfo.PNG"></a>447</span>
-								               </div>
-								               <div class="col-sm-1"></div>
-								            </div>
-								         </div>
-								            <a class="left carousel-control" href="#pCarousel"data-slide="prev">
-								               <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
-								               <span class="sr-only">Previous</span>
-								            </a> 
-								            <a class="right carousel-control" href="#pCarousel" role="button" data-slide="next"> 
-								               <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
-								               <span class="sr-only">Next</span>
-								            </a>
-								         </div>
+												<div class="rest"></div>
+										      </div>
+										      <a href='javascript:void(0);' class="mdLink">
+							               			<input type="hidden" value="${mdInfo[fn:length(mdInfo)-1].itemCode }" id="itemCode">
+													<input type="hidden" value="${mdInfo[fn:length(mdInfo)-1].tagMain }" id="tagMain">
+													<input type="hidden" value="${mdInfo[fn:length(mdInfo)-1].tagSub }" id="tagSub">
+										      		<div id="a1" class="col-sm-3" style="text-align:left;"><h4>${mdInfo[fn:length(mdInfo)-1].itemName }<br><b>${mdInfo[fn:length(mdInfo)-1].itemPriceM }원 ~ </b><del>${mdInfo[fn:length(mdInfo)-1].itemPriceMSub }</del></h4>
+									               		<span data-v-15082832="" class="for-loop-cloned-item-244"><img src="https://saladits3.s3.ap-northeast-2.amazonaws.com/banner/starinfo.PNG">${mdInfo[fn:length(mdInfo)-1].starAvg }</span>
+										                <span data-v-15082832="" class="for-loop-cloned-item-244"><img src="https://saladits3.s3.ap-northeast-2.amazonaws.com/banner/reviewinfo.PNG">${mdInfo[fn:length(mdInfo)-1].reviewCount }</span>
+									               </div>
+								               </a>
+										      </c:if>
+										      <c:if test="${fn:length(mdInfo) % 3 == 2 }">
+										      		<div class="col-sm-3" style="text-align:left;">
+									                  	  <img id="MD03" src="" width="320">
+										                  <img id="MD03_1" src="" width="250">
+									                  </div>
+													<div class="rest"></div>
+													</div>
+													<a href='javascript:void(0);' class="mdLink">
+								               			<input type="hidden" value="${mdInfo[fn:length(mdInfo)-2].itemCode }" id="itemCode">
+														<input type="hidden" value="${mdInfo[fn:length(mdInfo)-2].tagMain }" id="tagMain">
+														<input type="hidden" value="${mdInfo[fn:length(mdInfo)-2].tagSub }" id="tagSub">
+											      		<div id="a1" class="col-sm-3" style="text-align:left;"><h4>${mdInfo[fn:length(mdInfo)-2].itemName }<br><b>${mdInfo[fn:length(mdInfo)-2].itemPriceM }원 ~ </b><del>${mdInfo[fn:length(mdInfo)-2].itemPriceMSub }</del></h4>
+										               		<span data-v-15082832="" class="for-loop-cloned-item-244"><img src="https://saladits3.s3.ap-northeast-2.amazonaws.com/banner/starinfo.PNG">${mdInfo[fn:length(mdInfo)-2].starAvg }</span>
+											                <span data-v-15082832="" class="for-loop-cloned-item-244"><img src="https://saladits3.s3.ap-northeast-2.amazonaws.com/banner/reviewinfo.PNG">${mdInfo[fn:length(mdInfo)-2].reviewCount }</span>
+										               </div>
+									               </a>
+									               <div class="col-sm-1"></div>
+									               <a href='javascript:void(0);' class="mdLink">
+								               			<input type="hidden" value="${mdInfo[fn:length(mdInfo)-1].itemCode }" id="itemCode">
+														<input type="hidden" value="${mdInfo[fn:length(mdInfo)-1].tagMain }" id="tagMain">
+														<input type="hidden" value="${mdInfo[fn:length(mdInfo)-1].tagSub }" id="tagSub">
+										               <div id="a2" class="col-sm-3" style="text-align:left;"><h4>${mdInfo[fn:length(mdInfo)-1].itemName }<br><b>${mdInfo[fn:length(mdInfo)-1].itemPriceM }원 ~ </b><del>${mdInfo[fn:length(mdInfo)-1].itemPriceMSub }</del></h4>
+										               		<span data-v-15082832="" class="for-loop-cloned-item-244"><img src="https://saladits3.s3.ap-northeast-2.amazonaws.com/banner/starinfo.PNG">${mdInfo[fn:length(mdInfo)-1].starAvg }</span>
+											                <span data-v-15082832="" class="for-loop-cloned-item-244"><img src="https://saladits3.s3.ap-northeast-2.amazonaws.com/banner/reviewinfo.PNG">${mdInfo[fn:length(mdInfo)-1].reviewCount }</span>
+										               </div>
+										            </a>
+										      </c:if>
+<!-- 								            <a class="left carousel-control" href="#pCarousel"data-slide="prev"> -->
+<!-- 								               <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span> -->
+<!-- 								               <span class="sr-only">Previous</span> -->
+<!-- 								            </a>  -->
+<!-- 								            <a class="right carousel-control" id="rightButton02" href="#pCarousel" role="button" data-slide="next">  -->
+<!-- 								               <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span> -->
+<!-- 								               <span class="sr-only">Next</span> -->
+<!-- 								            </a> -->
 								   </div>
+
 								</div>
 							</section>
 							<section class="home-fcospot" data-v-cadb2ac2 data-v-75a55e4e>
@@ -478,7 +602,7 @@ $(function() {
 									</header>
 									<div class="home-fcospot__guide" data-v-cadb2ac2>
 										<a href="/fcospot" data-v-cadb2ac2>
-											<div id="search-fcospot" class="row item" data-v-cadb2ac2>
+											<div id="search-fcospot" class="row item" style="margin-right: 0px; margin-left: 0px;" data-v-cadb2ac2>
 												<span class="search-fcospot-placeholder" data-v-cadb2ac2>0개의
 													무료배송 프코스팟 찾기</span>
 											</div>
@@ -1143,26 +1267,15 @@ $(function() {
 </body>
 	
 	<a class="custom-ch-btn" style="display:none">문의하기</a>
-	<form name="payForm" id="payForm" method="post" action="" accept-charset="UTF-8" style="display:none">
-	</form>
+<!-- 	<form name="payForm" id="payForm" method="post" action="" accept-charset="UTF-8" style="display:none"> -->
+<!-- 	</form> -->
 	
-	<form name="payFormMobile" id="payFormMobile" target="_self" method="post" action="https://web.nicepay.co.kr/v3/smart/smartPayment.jsp" accept-charset="euc-kr" style="display:none">
-	</form>
+<!-- 	<form name="payFormMobile" id="payFormMobile" target="_self" method="post" action="https://web.nicepay.co.kr/v3/smart/smartPayment.jsp" accept-charset="euc-kr" style="display:none"> -->
+<!-- 	</form> -->
 	
-	<!-- Enliple Tracker Start -->
-	<script type="text/javascript">!function(e,n,t,c,o){e.enp=e.enp||function(){(e.enp.q=e.enp.q||[]).push(arguments)},(c=n.createElement(t)).async=!0,c.defer=!0,c.src="https://cdn.megadata.co.kr/dist/prod/enp_tracker_self_hosted.min.js",(o=n.getElementsByTagName(t)[0]).parentNode.insertBefore(c,o)}(window,document,"script"),enp("create","common","freshcode",{device:"B"}),enp("send","common","freshcode")</script> 
-	<!-- Enliple Tracker End -->
-	<script src="http://code.jquery.com/jquery-3.1.1.min.js"></script>
+<!-- 	<!-- Enliple Tracker Start --> -->
+<!-- 	<script type="text/javascript">!function(e,n,t,c,o){e.enp=e.enp||function(){(e.enp.q=e.enp.q||[]).push(arguments)},(c=n.createElement(t)).async=!0,c.defer=!0,c.src="https://cdn.megadata.co.kr/dist/prod/enp_tracker_self_hosted.min.js",(o=n.getElementsByTagName(t)[0]).parentNode.insertBefore(c,o)}(window,document,"script"),enp("create","common","freshcode",{device:"B"}),enp("send","common","freshcode")</script>  -->
+<!-- 	<!-- Enliple Tracker End --> -->
+<!-- 	<script src="http://code.jquery.com/jquery-3.1.1.min.js"></script> -->
 	<script src="${path }/js/bootstrap.js"></script>
 </html>
-
-
-
-<script type="text/javascript" src="/javascript/check-browser.js"></script>
-<script type="text/javascript" src="/javascript/channel-plugin.js"></script>
-
-<script>function nicepayStart(){goPay(document.payForm)}function nicepaySubmit(){document.payForm.submit()}function nicepayClose(){alert("결제를 취소 하였습니다."),document.getElementById("payForm").innerHTML="",document.getElementById("pay-btn1").removeAttribute("disabled"),document.getElementById("pay-btn1").classList.remove("button--disabled"),document.getElementById("pay-btn2").removeAttribute("disabled"),document.getElementById("pay-btn2").classList.remove("button--disabled")}function getTomorrow(){var e=new Date,t=e.getTime()+60*e.getTimezoneOffset()*1e3,n=new Date(t+324e5),o=n.getFullYear().toString(),i=(n.getMonth()+1).toString(),a=(n.getDate()+1).toString();return i.length<2&&(i="0"+i),a.length<2&&(a="0"+a),o+i+a}function nicepayMobileStart(){document.payFormMobile.submit()}</script>
-
-<script src="https://nsp.pay.naver.com/sdk/js/naverpay.min.js"></script>
-
-<script type="text/javascript" src="https://appleid.cdn-apple.com/appleauth/static/jsapi/appleid/1/en_US/appleid.auth.js"></script>

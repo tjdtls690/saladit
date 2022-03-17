@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="ModalDAO">
+	<select id="getModalList" resultType="modal">
+		select a.subscribe_code,
+		b.item_code , b.item_tag_main, b.item_tag_sub, b.item_tag_event,
+		b.item_name,item_price_m, b.item_price_m_sub, b.item_price_l,
+		b.item_price_l_sub, b.item_image
+		from sub_item_mapping a left join item b
+		on a.item_code = b.item_code
+		where a.subscribe_code = #{subscribe_code}
+		order by b.item_code asc;
+	</select>
+
+
+</mapper>

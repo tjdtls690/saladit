@@ -18,6 +18,9 @@
       height: 32vw;
    }
    
+   .header__logo a[data-v-7aa1f9b4] {
+    	height : 31px;
+	}
 /*    .buttonText{ */
 /* 	  	margin-left : 42%; */
 /* 	 } */
@@ -46,9 +49,66 @@
       width: 400px;
    }
    
+   .header__top-right>*[data-v-30697495] {
+	    display: inline-block;
+	    font-size: 14px;
+	    color: #333;
+	    margin-left: 8px;
+	    padding-left: 11px;
+	    height: 16px;
+	    line-height: 15px;
+	    border-left: 1px solid #d5e0db;
+	    cursor: pointer;
+	}
+	.header__logo a[data-v-7aa1f9b4] {
+   		height : 50px;
+	}
+	
+	.header__menus .dropdown[data-v-7aa1f9b4]:hover {
+	    background-image: url(https://saladits3.s3.ap-northeast-2.amazonaws.com/Logo/Icon_list_green.png);
+	}
+	
+	.header__menus .dropdown[data-v-7aa1f9b4] {
+	    height : 100%;
+	    background-image: url(https://saladits3.s3.ap-northeast-2.amazonaws.com/Logo/Icon_list_black.png);
+	    background-repeat : no-repeat;
+	    background-position : 0;
+	    background-size : 25px;
+	    padding-left : 30px;
+	}
+	
+	.header__menus-side .item .icon-order[data-v-7aa1f9b4] {
+	    background-image: url(https://saladits3.s3.ap-northeast-2.amazonaws.com/Logo/icon_pay.PNG);
+	}
+	
+	.side-nav[data-v-2f05bf52] {
+		display: none
+	}
+   
 /*    .buttonText{ */
 /* 	  	margin-left : 32%; */
 /* 	 } */
+}
+
+.empty[data-v-7aa1f9b4] {
+    background-image: url(https://saladits3.s3.ap-northeast-2.amazonaws.com/Logo/icon_baguni.PNG);
+}
+
+.auto-login-checkbox:checked+label[data-v-d3dff3a6]:before {
+    background-image: url(https://saladits3.s3.ap-northeast-2.amazonaws.com/Logo/icon_auto-login.png);
+}
+
+.kakao-login-custom-btn div[data-v-d3dff3a6] {
+    background-image: url(https://saladits3.s3.ap-northeast-2.amazonaws.com/Logo/icon_logo_kakao.png);
+}
+
+span.icon {
+    background: url(https://saladits3.s3.ap-northeast-2.amazonaws.com/Logo/icon_logo_google.PNG) 
+    transparent 5px 50% no-repeat;
+}
+
+.header__logo a[data-v-7aa1f9b4] {
+    background-image: url(https://saladits3.s3.ap-northeast-2.amazonaws.com/banner/logo.PNG);
 }
 
 .password{
@@ -81,37 +141,36 @@
     position: relative;
 }
 
- #customBtn {
-      background: white;
-      color: #444;
-      width: 100%;
-      border-radius: 5px;
-      border: thin solid #888;
-      box-shadow: 1px 1px 1px grey;
-      white-space: nowrap;
-    }
-    #customBtn:hover {
-      cursor: pointer;
-    }
-    span.label {
-      font-family: serif;
-      font-weight: normal;
-    }
-    span.icon {
-      background: url('/identity/sign-in/g-normal.png') transparent 5px 50% no-repeat;
-      display: inline-block;
-      vertical-align: middle;
-      width: 42px;
-      height: 42px;
-    }
-    span.buttonText {
-      display: inline-block;
-      vertical-align: middle;
-      font-size: 14px;
-      font-weight: bold;
-      /* Use the Roboto font that is loaded in the <head> */
-      font-family: 'Roboto', sans-serif;
-    }
+#customBtn {
+  background: white;
+  color: #444;
+  width: 100%;
+  border-radius: 5px;
+  border: thin solid #888;
+  box-shadow: 1px 1px 1px grey;
+  white-space: nowrap;
+}
+#customBtn:hover {
+  cursor: pointer;
+}
+span.label {
+  font-family: serif;
+  font-weight: normal;
+}
+span.icon {
+  display: inline-block;
+  vertical-align: middle;
+  width: 42px;
+  height: 42px;
+}
+span.buttonText {
+  display: inline-block;
+  vertical-align: middle;
+  font-size: 14px;
+  font-weight: bold;
+  /* Use the Roboto font that is loaded in the <head> */
+  font-family: 'Roboto', sans-serif;
+}
 
 .apple-login-custom-btn[data-v-d3dff3a6]{
 	cursor: pointer;
@@ -147,6 +206,218 @@ del {
    width: 140px;
 }
 
-.kakao-login-custom-btn div[data-v-d3dff3a6]{
-	background-image : url(https://saladits3.s3.ap-northeast-2.amazonaws.com/Logo/8e0a419.png);
+span.icon {
+    background: url(https://saladits3.s3.ap-northeast-2.amazonaws.com/Logo/icon_logo_google.PNG) transparent 5px 50% no-repeat;
+}
+.header__logo a[data-v-7aa1f9b4] {
+    background-image: url(https://saladits3.s3.ap-northeast-2.amazonaws.com/banner/logo.PNG);
+}
+span.label {
+  font-family: serif;
+  font-weight: normal;
+}
+span.icon {
+  display: inline-block;
+  vertical-align: middle;
+  width: 42px;
+  height: 42px;
+}
+span.buttonText {
+  display: inline-block;
+  vertical-align: middle;
+  font-size: 14px;
+  font-weight: bold;
+  /* Use the Roboto font that is loaded in the <head> */
+  font-family: 'Roboto', sans-serif;
+}
+    
+.footer--logo {
+   width: 140px;
+}
+
+
+
+.side-nav__overlay[data-v-2f05bf52] {
+	z-index: 1000;
+	display: block;
+	left: 0;
+	background: #000;
+	opacity: .3
+}
+
+.side-nav__overlay[data-v-2f05bf52], .side-nav__wrap[data-v-2f05bf52] {
+	position: fixed;
+	right: 0;
+	top: 0;
+	bottom: 0
+}
+
+.side-nav__wrap[data-v-2f05bf52] {
+	z-index: 99999999;
+	width: 80vw;
+	background: #fff;
+	min-width: 280px;
+	box-sizing: border-box;
+	transition: transform .35s ease;
+	transform: translateX(0)
+}
+
+.side-nav__body[data-v-2f05bf52] {
+	overflow: auto;
+	-webkit-overflow-scrolling: touch;
+	box-sizing: border-box;
+	padding: 0 16px;
+	height: 100vh;
+	height: -webkit-fill-available
+}
+
+.side-nav__nav[data-v-2f05bf52] {
+	position: -webkit-sticky;
+	position: sticky;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	height: 48px;
+	background: #fff;
+	padding: 0 16px calc(env(safe-area-inset-bottom)- 10px);
+	border-top: 1px solid #e7e7e7
+}
+
+.side-nav__nav nav[data-v-2f05bf52] {
+	display: flex;
+	justify-content: space-around;
+	height: 100%
+}
+
+.side-nav__nav__item[data-v-2f05bf52] {
+	width: 100%;
+	height: 100%;
+	display: flex;
+	align-items: center
+}
+
+.side-nav__nav button[data-v-2f05bf52] {
+	display: block;
+	width: 100%;
+	height: 100%;
+	border: none;
+	background: none;
+	outline: none;
+	-webkit-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
+	cursor: pointer;
+	-webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+	text-align: center
+}
+
+.side-nav__nav button[data-v-2f05bf52]:active {
+	opacity: .8
+}
+
+.side-nav__nav button span[data-v-2f05bf52] {
+	display: block;
+	font-size: 13px;
+	line-height: 16px;
+	font-weight: 300;
+	color: #9b9b9b
+}
+
+.side-nav-enter-active[data-v-2f05bf52], .side-nav-leave-active[data-v-2f05bf52]
+	{
+	transition: all .35s ease-in-out
+}
+
+.side-nav-enter-active .side-nav__wrap[data-v-2f05bf52],
+	.side-nav-leave-active .side-nav__wrap[data-v-2f05bf52] {
+	transform: translateX(100vw)
+}
+
+.side-nav-guest[data-v-78a0edfc] {
+	padding: 44px 8px 26px
+}
+
+.side-nav-guest__logo[data-v-78a0edfc] {
+	margin: 0
+}
+
+.side-nav-guest__logo img[data-v-78a0edfc] {
+	display: block;
+	margin: 0 auto;
+	width: 150px
+}
+
+.side-nav-guest__description[data-v-78a0edfc] {
+	margin: 4px 0 0;
+	font-size: 12px;
+	line-height: 16px;
+	font-weight: 300;
+	color: #6f7174;
+	text-align: center
+}
+
+.side-nav-guest__nav[data-v-78a0edfc] {
+	margin: 28px 0 0
+}
+
+
+.nav-menus ul[data-v-1fc516f9] {
+	margin: 0;
+	padding: 0;
+	list-style: none;
+	cursor: pointer
+}
+
+.nav-menus ul>li[data-v-1fc516f9] {
+	font-size: 14px;
+	background-image: url(https://saladits3.s3.ap-northeast-2.amazonaws.com/Logo/icon_arrow_right_m.png);
+	background-repeat: no-repeat;
+	background-position: 100%;
+	background-size: 26px;
+	border-bottom: 1px solid #e7e7e7
+}
+
+.nav-menus ul>li span[data-v-1fc516f9] {
+	width: 100%;
+	color: #3d3d3d;
+	padding: 16px 0;
+	display: block
+}
+
+.nav-menus ul>li.logout[data-v-1fc516f9] {
+	background-image: none
+}
+
+.new[data-v-1fc516f9]:after {
+	content: "";
+	display: inline-block;
+	background-image: url(/images/icon_new.svg);
+	width: 12px;
+	height: 12px;
+	background-size: cover;
+	background-repeat: no-repeat;
+	background-position: 50%;
+	margin-left: 2px
+}
+
+.new.point[data-v-1fc516f9]:after {
+	background-image: none;
+	width: 5px;
+	height: 5px;
+	background-color: #fdb33c;
+	border-radius: 2.5px;
+	margin-bottom: 7px
+}
+
+.button__wrap[data-v-a1c889e0] {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-sizing: border-box;
+    height: 100%;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    font-size : 15px;
 }

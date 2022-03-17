@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="EventDAO">
+	<resultMap type="mycoupon" id="couponResult">
+		<id property="coupon_code" column="coupon_code"/>
+		<result property="coupon_type" column="coupon_type"/>
+		<result property="coupon_explain" column="coupon_explain"/>
+		<result property="user_code" column="user_code"/>
+		<result property="coupon_pack" column="coupon_pack"/>
+	</resultMap>
+	
+	<select id="getCoupon" resultMap="couponResult">
+		SELECT * FROM user_coupon
+		WHERE user_code = #{user_code}
+	</select>
+	
+	<insert id="insertCoupon" parameterType="mycoupon">
+		INSERT INTO user_coupon(user_code, coupon_code)
+		VALUES(#{user_code}, #{coupon_code})
+	</insert>
+	
+	<select id="getCouponPack" resultMap="couponResult">
+		SELECT * FROM coupon
+		WHERE coupon_pack = #{coupon_pack}
+	</select>
+	
+	<select id="getCouponDetail" resultMap="couponResult">
+		SELECT * FROM coupon
+		WHERE coupon_code = #{coupon_code}
+	</select>
+	<select id="getAllCoupon" resultMap="couponResult">
+		SELECT * FROM coupon
+	</select>
+	<select id="getUserCoupon" resultMap="couponResult">
+		SELECT a.user_code, b.*
+		FROM user_coupon a LEFT JOIN coupon b 
+		ON a.coupon_code = b.coupon_code
+		ORDER BY a.user_code ASC
+	</select>
+</mapper>

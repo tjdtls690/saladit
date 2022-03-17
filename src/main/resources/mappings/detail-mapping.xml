@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+<mapper namespace="DetailDAO">
+	<resultMap type="mydetail" id="detailResult">
+		<id property="item_code" column="item_code" />
+		<result property="item_tag_main" column="item_tag_main" />
+		<result property="item_tag_sub" column="item_tag_sub" />
+		<result property="item_tag_event" column="item_tag_event" />
+		<result property="item_name" column="item_name" />
+		<result property="item_summary" column="item_summary" />
+		<result property="item_explain" column="item_explain" />
+		<result property="item_price_m" column="item_price_m" />
+		<result property="item_price_m_sub" column="item_price_m_sub" />
+		<result property="item_price_l" column="item_price_l" />
+		<result property="item_price_l_sub" column="item_price_l_sub" />
+		<result property="item_nut" column="item_nut" />
+		<result property="item_image" column="item_image" />
+		<result property="item_info_image" column="item_info_image" />
+		<result property="item_delinfo_image" column="item_delinfo_image" />
+	</resultMap>
+	<resultMap type="mydetail" id="detailResult02">
+		<id property="item_code" column="subscribe_code" />
+		<result property="item_tag_main" column="subscribe_tag_main" />
+		<result property="item_tag_sub" column="subscribe_tag_sub" />
+		<result property="item_name" column="subscribe_name" />
+		<result property="item_summary" column="subscribe_summary" />
+		<result property="item_explain" column="subscribe_explain" />
+		<result property="item_price_m" column="subscribe_price_m" />
+		<result property="item_price_m_sub" column="subscribe_price_m_sub" />
+		<result property="item_price_l" column="subscribe_price_l" />
+		<result property="item_price_l_sub" column="subscribe_price_l_sub" />
+		<result property="item_image" column="subscribe_image" />
+		<result property="item_info_image" column="subscribe_info_image" />
+	</resultMap>
+	
+	<resultMap type="mydetail" id="detailInfo">
+		<id property="item_code" column="item_code" />
+		<result property="item_info" column="item_info"  />
+	</resultMap>
+	
+	<select id="getItem" resultMap="detailResult">
+		SELECT * FROM item WHERE item_code = #{item_code}
+	</select>
+		
+	<select id="getSub" resultMap="detailResult02">
+		SELECT * FROM sub_item_mapping WHERE subscribe_code = #{subscribe_code}
+	</select>
+	<select id="getInfo" resultMap="detailInfo">
+		select * from item_info where item_code = #{item_code}
+	</select>
+	<select id="getSubItem" resultMap="detailResult02">
+		select * from subscribe WHERE subscribe_code = #{item_code}
+	</select>
+<!-- 	<select id="getRandom" resultMap="detailResult"> -->
+<!-- 		select * from item where item_tag_main= #{item_tag_main} order by rand() Limit 9; -->
+<!-- 	</select> -->
+
+</mapper>

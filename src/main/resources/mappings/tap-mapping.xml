@@ -10,6 +10,7 @@
 	<resultMap type="mytap" id="tapResult01">
 		<id property="itemCode" column="item_code" />
 		<result property="tagMain" column="item_tag_main" />
+		<result property="tagSub" column="item_tag_sub" />
 		<result property="itemImage" column="item_image" />
 		<result property="itemName" column="item_name" />
 		<result property="itemSummary" column="item_summary" />
@@ -21,6 +22,7 @@
 	<resultMap type="mytap" id="tapResult02">
 		<id property="itemCode" column="subscribe_code" />
 		<result property="tagMain" column="subscribe_tag_main" />
+		<result property="tagSub" column="subscribe_tag_sub" />
 		<result property="itemImage" column="subscribe_image" />
 		<result property="itemName" column="subscribe_name" />
 		<result property="itemSummary" column="subscribe_summary" />
@@ -30,7 +32,7 @@
 		<result property="reviewCount" column="count(b.content)" />
 	</resultMap>
 	<select id="getItemInfoList01" resultMap="tapResult01">
-			select a.item_code, a.item_tag_main, a.item_image, a.item_name, a.item_summary, 
+			select a.item_code, a.item_tag_main, a.item_tag_sub, a.item_image, a.item_name, a.item_summary, 
 			a.item_price_m, a.item_price_m_sub, round(avg(b.star), 1), count(b.content) 
 			from item a left join reviewboard b 
 			on a.item_code = b.item_code 
@@ -48,7 +50,7 @@
 			order by a.item_code asc;
 	</select>
 	<select id="getItemInfoList02" resultMap="tapResult02">
-			select a.subscribe_code, a.subscribe_tag_main, a.subscribe_image, a.subscribe_name, a.subscribe_summary, 
+			select a.subscribe_code, a.subscribe_tag_main, a.subscribe_tag_sub, a.subscribe_image, a.subscribe_name, a.subscribe_summary, 
 			a.subscribe_price_m, a.subscribe_price_m_sub, round(avg(b.star), 1), count(b.content) 
 			from subscribe a left join reviewboard b
 			on a.subscribe_code = b.subscribe_code 
@@ -59,6 +61,49 @@
 			<if test='tagMain % 100 != 0'>
 				AND a.subscribe_tag_sub = #{tagMain}
 			</if> 
+			group by a.subscribe_code
+			order by a.subscribe_code asc;
+	</select>
+	
+	<select id="getAvgCount" resultMap="tapResult01">
+		SELECT item_code, round(avg(b.star), 1), count(b.content) 
+		  FROM reviewboard b WHERE item_code = #{itemCode};
+	</select>
+	
+	<select id="getRandom" resultMap="tapResult01">
+		select a.item_code, a.item_tag_main, a.item_image, a.item_name, a.item_summary, 
+			a.item_price_m, a.item_price_m_sub, round(avg(b.star), 1), count(b.content) 
+			from item a left join reviewboard b 
+			on a.item_code=b.item_code
+            where a.item_tag_main=#{tagMain}
+            group by a.item_code
+			order by rand() Limit 9;
+	</select>
+	
+	<select id="getRandom2" resultMap="tapResult02">
+		select a.subscribe_code, a.subscribe_tag_main, a.subscribe_image, a.subscribe_name, a.subscribe_summary, 
+			a.subscribe_price_m, a.subscribe_price_m_sub, round(avg(b.star), 1), count(b.content) 
+			from subscribe a left join reviewboard b
+			on a.subscribe_code = b.subscribe_code 
+            where a.subscribe_tag_main = #{tagMain}
+            group by a.subscribe_code
+            order by rand() limit 9;
+	</select>
+	<select id="getItemInfoOne01" resultMap="tapResult01">
+			select a.item_code, a.item_tag_main, a.item_tag_sub, a.item_image, a.item_name, a.item_summary, 
+			a.item_price_m, a.item_price_m_sub, round(avg(b.star), 1), count(b.content) 
+			from item a left join reviewboard b 
+			on a.item_code = b.item_code 
+			where a.item_code = #{itemCode}
+			group by a.item_code
+			order by a.item_code asc;
+	</select>
+	<select id="getItemInfoOne02" resultMap="tapResult02">
+			select a.subscribe_code, a.subscribe_tag_main, a.subscribe_tag_sub, a.subscribe_image, a.subscribe_name, a.subscribe_summary, 
+			a.subscribe_price_m, a.subscribe_price_m_sub, round(avg(b.star), 1), count(b.content) 
+			from subscribe a left join reviewboard b
+			on a.subscribe_code = b.subscribe_code 
+			where a.subscribe_code = #{itemCode}
 			group by a.subscribe_code
 			order by a.subscribe_code asc;
 	</select>

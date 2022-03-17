@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="BasketDAO">
+	<resultMap type="mybasket" id="basketResult">
+		<id property="seq" column="seq" />
+		<result property="itemImage" column="item_image" />
+		<result property="itemName" column="item_name" />
+		<result property="tagMain" column="tag_main" />
+		<result property="tagSub" column="tag_sub" />
+		<result property="amount" column="amount" />
+		<result property="price" column="price" />
+		<result property="priceSub" column="price_sub" />
+		<result property="userCode" column="user_code" />
+		<result property="itemCode" column="item_code" />
+		<result property="subTotal" column="sub_total" />
+		<result property="itemSize" column="item_size" />
+	</resultMap>
+	<!-- resultType : 같을떄 resultMap : 다를떄 -->
+	<select id="getBasketList" resultMap="basketResult" >
+		SELECT * FROM basket WHERE user_code = #{userCode} ORDER BY seq DESC
+	</select>
+	
+	<!--  -->
+	<select id="getBasketChangeList">
+		UPDATE basket SET amount = #{amount}, sub_total = #{subTotal} WHERE item_code = #{itemCode} AND user_code= #{userCode} ORDER BY seq DESC
+	</select>
+	
+	<delete id="deleteBasketList">
+		DELETE FROM basket WHERE item_code = #{itemCode} AND user_code= #{userCode} AND item_size = #{itemSize}
+	</delete>
+	
+	<insert id="insertBasket">
+		insert INTO basket(item_image, item_name, tag_main, tag_sub, amount, price, price_sub,user_code,
+                   item_code, sub_total, item_size)
+        VALUES(#{itemImage}, #{itemName}, #{tagMain}, #{tagSub}, #{amount}, #{price}, #{priceSub}, #{userCode},
+        	   #{itemCode}, #{subTotal}, #{itemSize} );
+		
+	</insert>
+	
+	
+	
+</mapper>
